@@ -1,6 +1,7 @@
 require "floorplanner/version"
 
 require "pathname"
+require "httpi"
 require "active_support/all"
 
 module Floorplanner

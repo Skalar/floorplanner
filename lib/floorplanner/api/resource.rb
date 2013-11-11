@@ -2,6 +2,7 @@ module Floorplanner
   module Api
     class Resource
       include UrlBuilder
+      include Client
 
       class_attribute :_configuration, instance_writer: false
 
