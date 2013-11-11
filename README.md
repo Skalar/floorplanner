@@ -1,6 +1,6 @@
 # Floorplanner
 
-TODO: Write a gem description
+Ruby interface working against floor planners API.
 
 ## Installation
 
