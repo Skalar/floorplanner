@@ -1,5 +1,6 @@
 require "floorplanner/version"
 
+require "pathname"
 require "active_support/all"
 
 module Floorplanner
@@ -16,4 +17,21 @@ module Floorplanner
   #
   # Returns a Configuration object
   mattr_accessor :default_configuration
+
+
+
+  # :nodoc:
+  #
+  # Read default config from file, just makes it easy for me to spin up
+  # a console, read API credentials and get going
+  def self.conf!
+    read_default_configuration_from_file 'default_config.yml'
+  end
+
+  # :nodoc:
+  def self.read_default_configuration_from_file(pathname)
+    path = Pathname.new pathname
+    path = Pathname.new [Dir.pwd, pathname].join('/') unless path.absolute?
+    self.default_configuration = Configuration.new YAML.load_file(path)
+  end
 end
