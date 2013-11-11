@@ -1,10 +1,12 @@
 module Floorplanner
   class Configuration
     API_DEFAULTS = {
-      api_password: 'x'
+      api_password: 'x',
+      api_protocol: 'http',
+      api_domain: 'floorplanner.com'
     }
 
-    attr_accessor :api_key, :api_password, :api_subdomain
+    attr_accessor :api_key, :api_password, :api_subdomain, :api_protocol, :api_domain
 
     def initialize(attributes = {})
       assign API_DEFAULTS
