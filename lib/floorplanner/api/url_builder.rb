@@ -3,6 +3,10 @@ module Floorplanner
     module UrlBuilder
       extend ActiveSupport::Concern
 
+      included do
+        delegate :endpoint, :endpoint_for_collection, :endpoint_for_single, to: :class
+      end
+
       module ClassMethods
         def endpoint_for_collection
           [endpoint, format].join '.'
@@ -15,11 +19,13 @@ module Floorplanner
           ].join '.'
         end
 
+
+
+        private
+
         def endpoint
           [base_url, resource_path].join('/')
         end
-
-        private
 
         def resource_path
           resource_name.pluralize
@@ -44,9 +50,6 @@ module Floorplanner
           end
         end
       end
-
-
-      delegate :endpoint, to: :class
     end
   end
 end

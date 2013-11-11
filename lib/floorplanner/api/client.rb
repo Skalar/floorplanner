@@ -5,7 +5,7 @@ module Floorplanner
 
       included do
         class_attribute :_configuration, instance_writer: false
-        delegate :configuration, to: :class
+        delegate :configuration, :build_request, to: :class
       end
 
       module ClassMethods
@@ -16,9 +16,6 @@ module Floorplanner
         def configuration
           _configuration or ::Floorplanner.default_configuration
         end
-
-
-        private
 
         def build_request(options = {})
           HTTPI::Request.new(options).tap do |request|

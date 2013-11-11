@@ -5,6 +5,7 @@ module Floorplanner
       include UrlBuilder
       include Client
       include FinderMethods
+      include Persistence
 
       def self.resource_name
         name.demodulize.underscore
@@ -13,7 +14,7 @@ module Floorplanner
       attr_accessor :attributes
 
       def initialize(attributes = {})
-        self.attributes = attributes
+        self.attributes = attributes.stringify_keys
       end
 
       def inspect

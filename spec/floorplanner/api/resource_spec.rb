@@ -18,7 +18,6 @@ module Floorplanner::Api
       subject { described_class }
 
       its(:configuration) { should eq config }
-      its(:endpoint) { should eq 'http://test.floorplanner.com/test_resources' }
 
       it "has an #endpoint_for_collection" do
         expect(subject.endpoint_for_collection).to eq 'http://test.floorplanner.com/test_resources.xml'
