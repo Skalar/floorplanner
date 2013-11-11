@@ -30,7 +30,9 @@ module Floorplanner
         end
 
         def instantiate_collection(collection)
-          fail "TODO"
+          collection.map do |attributes|
+            instantiate 'attributes' => attributes
+          end
         end
       end
     end
