@@ -4,6 +4,17 @@ module Floorplanner
       extend ActiveSupport::Concern
 
       module ClassMethods
+        def endpoint_for_collection
+          [endpoint, format].join '.'
+        end
+
+        def endpoint_for_single(id)
+          [
+            [endpoint, id].join('/'),
+            format
+          ].join '.'
+        end
+
         def endpoint
           [base_url, resource_path].join('/')
         end
