@@ -19,14 +19,18 @@ module Floorplanner
 
           parser = Nori.new
           parsed = parser.parse response.body
-          instantiate 'attributes' => parsed[resource_name]
+          instantiate 'attributes' => parsed[resource_name], 'response' => response
         end
 
 
         private
 
         def instantiate(coder)
-          new coder['attributes']
+          new(coder['attributes']).tap do |record|
+            if coder.has_key? 'response'
+              record.response = coder['response']
+            end
+          end
         end
 
         def instantiate_collection(collection)

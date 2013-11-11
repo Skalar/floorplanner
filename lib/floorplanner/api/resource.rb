@@ -11,6 +11,8 @@ module Floorplanner
         name.demodulize.underscore
       end
 
+      # Returns response this record's attributes was loaded from
+      attr_accessor :response
       attr_accessor :attributes
 
       def initialize(attributes = {})
