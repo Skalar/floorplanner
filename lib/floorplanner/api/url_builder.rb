@@ -1,6 +1,6 @@
 module Floorplanner
   module Api
-    module Client
+    module UrlBuilder
       extend ActiveSupport::Concern
 
       module ClassMethods

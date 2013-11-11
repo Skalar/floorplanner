@@ -1,7 +1,7 @@
 module Floorplanner
   module Api
     class Resource
-      include Client
+      include UrlBuilder
 
       class_attribute :_configuration, instance_writer: false
 
@@ -13,9 +13,8 @@ module Floorplanner
         _configuration or ::Floorplanner.default_configuration
       end
 
-      def initialize(attributes = {})
 
-      end
+      delegate :configuration, to: :class
     end
   end
 end

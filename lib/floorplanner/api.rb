@@ -3,7 +3,7 @@ module Floorplanner
     extend ActiveSupport::Autoload
 
     autoload :Resource
-    autoload :Client
+    autoload :UrlBuilder
 
     autoload_under 'resources' do
       autoload :User
