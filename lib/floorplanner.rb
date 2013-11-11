@@ -1,10 +1,11 @@
 require "floorplanner/version"
 
+require "active_support/all"
+require "active_model"
 require "pathname"
 require "httpi"
 require "nokogiri"
 require "nori"
-require "active_support/all"
 
 module Floorplanner
   extend ActiveSupport::Autoload

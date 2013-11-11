@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport", ">= 3.2.14", "< 5"
+  spec.add_dependency "activemodel", ">= 3.2.14", "< 5"
   spec.add_dependency "httpi", "~> 2.1.0"
   spec.add_dependency "nokogiri", "~> 1.5.10"
   spec.add_dependency "nori", "~> 2.3.0"

@@ -1,6 +1,7 @@
 module Floorplanner
   module Api
     class Resource
+      include ActiveModel::Serializers::Xml
       include UrlBuilder
       include Client
       include FinderMethods
@@ -9,14 +10,10 @@ module Floorplanner
         name.demodulize.underscore
       end
 
-
+      attr_accessor :attributes
 
       def initialize(attributes = {})
-        @attributes = attributes
-      end
-
-      def attributes
-        attributes.dup
+        self.attributes = attributes
       end
 
       def inspect
@@ -27,7 +24,10 @@ module Floorplanner
 
       private
 
-      attr_reader :attributes
+      def read_attribute_for_serialization(name)
+        # TODO .. to be removed when we have read and write methods set up on resource, and a simple schema defined with validations
+        attributes[name]
+      end
     end
   end
 end
