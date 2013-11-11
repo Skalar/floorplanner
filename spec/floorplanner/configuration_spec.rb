@@ -8,8 +8,9 @@ describe Floorplanner::Configuration do
     end
 
     it "assigns incomming attributes" do
-      config = described_class.new api_key: 'top-secret'
+      config = described_class.new api_key: 'top-secret', api_subdomain: 'my-sub-domain'
       expect(config.api_key).to eq 'top-secret'
+      expect(config.api_subdomain).to eq 'my-sub-domain'
     end
   end
 end

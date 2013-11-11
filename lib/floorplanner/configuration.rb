@@ -4,7 +4,7 @@ module Floorplanner
       api_password: 'x'
     }
 
-    attr_accessor :api_key, :api_password
+    attr_accessor :api_key, :api_password, :api_subdomain
 
     def initialize(attributes = {})
       assign API_DEFAULTS
