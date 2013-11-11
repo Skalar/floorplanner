@@ -5,6 +5,7 @@ module Floorplanner
     autoload :Resource
     autoload :UrlBuilder
     autoload :Client
+    autoload :FinderMethods
 
     autoload_under 'resources' do
       autoload :User

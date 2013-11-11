@@ -3,13 +3,20 @@ module Floorplanner
     module Client
       extend ActiveSupport::Concern
 
-      module ClassMethods
-        def all
-          request = build_request url: endpoint_for_collection
-          response = HTTPI.get request
+      included do
+        class_attribute :_configuration, instance_writer: false
+        delegate :configuration, to: :class
+      end
 
-          [request, response]
+      module ClassMethods
+        def configuration=(config)
+          self._configuration = config
         end
+
+        def configuration
+          _configuration or ::Floorplanner.default_configuration
+        end
+
 
         private
 

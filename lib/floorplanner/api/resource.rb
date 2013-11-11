@@ -3,19 +3,31 @@ module Floorplanner
     class Resource
       include UrlBuilder
       include Client
+      include FinderMethods
 
-      class_attribute :_configuration, instance_writer: false
-
-      def self.configuration=(config)
-        self._configuration = config
-      end
-
-      def self.configuration
-        _configuration or ::Floorplanner.default_configuration
+      def self.resource_name
+        name.demodulize.underscore
       end
 
 
-      delegate :configuration, to: :class
+
+      def initialize(attributes = {})
+        @attributes = attributes
+      end
+
+      def attributes
+        attributes.dup
+      end
+
+      def inspect
+        inspection = attributes.keys.map { |key| "#{key}: #{attributes[key].inspect}" }
+        "#<#{self.class} #{inspection.join(', ')}>"
+      end
+
+
+      private
+
+      attr_reader :attributes
     end
   end
 end

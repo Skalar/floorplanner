@@ -22,7 +22,7 @@ module Floorplanner
         private
 
         def resource_path
-          name.demodulize.underscore.pluralize
+          resource_name.pluralize
         end
 
         def base_url

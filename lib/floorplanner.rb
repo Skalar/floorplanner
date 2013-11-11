@@ -2,6 +2,8 @@ require "floorplanner/version"
 
 require "pathname"
 require "httpi"
+require "nokogiri"
+require "nori"
 require "active_support/all"
 
 module Floorplanner
