@@ -11,7 +11,7 @@ module Floorplanner
         private
 
         def resource_path
-          [name.demodulize.underscore.pluralize, format].join '.'
+          name.demodulize.underscore.pluralize
         end
 
         def base_url

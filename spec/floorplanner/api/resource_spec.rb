@@ -16,7 +16,7 @@ module Floorplanner::Api
 
 
     its(:configuration) { should eq config }
-    its(:endpoint) { should eq 'http://test.floorplanner.com/test_resources.xml' }
+    its(:endpoint) { should eq 'http://test.floorplanner.com/test_resources' }
 
     it "is a resource" do
       expect(subject).to be_a Resource
