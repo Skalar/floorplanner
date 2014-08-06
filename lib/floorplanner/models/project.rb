@@ -11,10 +11,14 @@ module Floorplanner
       element :project_url
       element :user_id
       element :location
-      complex :floors, Floor
+      complex :floors, Array[Floor]
     end
 
-    class Projects < Model
+    class ProjectDocument < Model
+      complex :project, Project
+    end
+
+    class ProjectsDocument < Model
       complex :projects, Array[Project]
     end
   end

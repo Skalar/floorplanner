@@ -1,33 +1,32 @@
 module Floorplanner
   class Client
-    class Error < StandardError
-    end
-
-    def initialize(api_key, password, subdomain, protocol = "https")
+    def initialize(api_key:, password:, subdomain:, protocol: "https")
       @api_key = api_key
       @password = password
       @subdomain = subdomain
       @protocol = protocol
     end
 
-    def projects
-      res = get("projects.xml")
+    def get(resource_path)
+      res = HTTPI.get(build_request(resource_path))
+      check_result(res)
+    end
 
-      if res.error?
-        raise Error, "HTTP error #{res.code} - #{res.body}" 
-      end
-
-      ::Floorplanner::Models::Projects.from_xml(res.body).projects
+    def post(resource_path, data)
+      req = build_request(resource_path)
+      req.body = data
+      res = HTTPI.post(req)
+      check_result(res)
     end
 
     private
 
-    def get(resource_path)
-      HTTPI.get(build_request(resource_path))
-    end
+    def check_result(res)
+      if res.error?
+        raise Error, "HTTP error #{res.code} - #{res.body}" 
+      end
 
-    def post(resource_path)
-      raise "Not implemented"
+      res
     end
 
     def build_request(resource_path)
@@ -38,6 +37,9 @@ module Floorplanner
 
     def build_url(resource_path)
       "#{@protocol}://#{@subdomain}.floorplanner.com/#{resource_path}"
+    end
+
+    class Error < StandardError
     end
   end
 end

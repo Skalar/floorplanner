@@ -7,7 +7,7 @@ module Floorplanner
       element :height
       element :created_at
       element :updated_at
-      complex :designs, Design
+      complex :designs, Array[Design]
     end
   end
 end
