@@ -12,9 +12,10 @@ module Floorplanner
       check_result(res)
     end
 
-    def post(resource_path, data)
+    def post(resource_path, xml)
       req = build_request(resource_path)
-      req.body = data
+      req.body = xml
+      req.headers["Content-Type"] = "text/xml"
       res = HTTPI.post(req)
       check_result(res)
     end
