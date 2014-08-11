@@ -64,4 +64,18 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(drawing.visible).to eq("1")
     end
   end
+
+  describe "#all" do
+    it "returns an array of projects based on the response XML" do
+      client.path_xml["projects.xml"] = read_xml("all")
+
+      projects = subject.all
+
+      expect(projects.length).to be(4)
+      expect(projects[0].id).to be(29261344)
+      expect(projects[1].id).to be(29261186)
+      expect(projects[2].id).to be(29255071)
+      expect(projects[3].id).to be(29253756)
+    end
+  end
 end

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects type="array">
+  <project>
+    <created-at type="datetime">2014-08-08T08:59:32-04:00</created-at>
+    <description nil="true"></description>
+    <element-library-id type="integer">1</element-library-id>
+    <enable-autosave type="boolean">false</enable-autosave>
+    <exported-at type="datetime" nil="true"></exported-at>
+    <external-identifier nil="true"></external-identifier>
+    <grid-cell-size type="decimal" nil="true"></grid-cell-size>
+    <grid-sub-cell-size type="decimal" nil="true"></grid-sub-cell-size>
+    <id type="integer">29261344</id>
+    <name>Skalar test 2</name>
+    <original-project-id type="integer" nil="true"></original-project-id>
+    <project-url>jz4sdc</project-url>
+    <public type="boolean">false</public>
+    <texture-library-id type="integer">1</texture-library-id>
+    <updated-at type="datetime">2014-08-08T08:59:33-04:00</updated-at>
+    <user-id type="integer">26011672</user-id>
+    <wall-thickness type="decimal">0.25</wall-thickness>
+    <floors-count type="integer">1</floors-count>
+    <designs-count type="integer">0</designs-count>
+  </project>
+  <project>
+    <created-at type="datetime">2014-08-08T08:32:19-04:00</created-at>
+    <description nil="true"></description>
+    <element-library-id type="integer">1</element-library-id>
+    <enable-autosave type="boolean">true</enable-autosave>
+    <exported-at type="datetime" nil="true"></exported-at>
+    <external-identifier nil="true"></external-identifier>
+    <grid-cell-size type="decimal">2.0</grid-cell-size>
+    <grid-sub-cell-size type="decimal">0.5</grid-sub-cell-size>
+    <id type="integer">29261186</id>
+    <name>Skalar test</name>
+    <original-project-id type="integer" nil="true"></original-project-id>
+    <project-url>4zlboc</project-url>
+    <public type="boolean">false</public>
+    <texture-library-id type="integer">1</texture-library-id>
+    <updated-at type="datetime">2014-08-08T09:04:21-04:00</updated-at>
+    <user-id type="integer">26011672</user-id>
+    <wall-thickness type="decimal">0.25</wall-thickness>
+    <floors-count type="integer">3</floors-count>
+    <designs-count type="integer">2</designs-count>
+  </project>
+  <project>
+    <created-at type="datetime">2014-08-07T09:22:00-04:00</created-at>
+    <description nil="true"></description>
+    <element-library-id type="integer">1</element-library-id>
+    <enable-autosave type="boolean">true</enable-autosave>
+    <exported-at type="datetime" nil="true"></exported-at>
+    <external-identifier nil="true"></external-identifier>
+    <grid-cell-size type="decimal" nil="true"></grid-cell-size>
+    <grid-sub-cell-size type="decimal" nil="true"></grid-sub-cell-size>
+    <id type="integer">29255071</id>
+    <name>Test Stairs</name>
+    <original-project-id type="integer">29253756</original-project-id>
+    <project-url>y4nfxm</project-url>
+    <public type="boolean">false</public>
+    <texture-library-id type="integer">1</texture-library-id>
+    <updated-at type="datetime">2014-08-11T05:16:13-04:00</updated-at>
+    <user-id type="integer">26011672</user-id>
+    <wall-thickness type="decimal">0.25</wall-thickness>
+    <floors-count type="integer">1</floors-count>
+    <designs-count type="integer">1</designs-count>
+  </project>
+  <project>
+    <created-at type="datetime">2014-08-07T05:06:24-04:00</created-at>
+    <description nil="true"></description>
+    <element-library-id type="integer">1</element-library-id>
+    <enable-autosave type="boolean">true</enable-autosave>
+    <exported-at type="datetime">2014-08-07T09:22:20-04:00</exported-at>
+    <external-identifier nil="true"></external-identifier>
+    <grid-cell-size type="decimal" nil="true"></grid-cell-size>
+    <grid-sub-cell-size type="decimal" nil="true"></grid-sub-cell-size>
+    <id type="integer">29253756</id>
+    <name>Test Furniture</name>
+    <original-project-id type="integer" nil="true"></original-project-id>
+    <project-url>4ywi4l</project-url>
+    <public type="boolean">false</public>
+    <texture-library-id type="integer">1</texture-library-id>
+    <updated-at type="datetime">2014-08-07T09:23:01-04:00</updated-at>
+    <user-id type="integer">26011672</user-id>
+    <wall-thickness type="decimal">0.25</wall-thickness>
+    <floors-count type="integer">1</floors-count>
+    <designs-count type="integer">1</designs-count>
+  </project>
+</projects>
