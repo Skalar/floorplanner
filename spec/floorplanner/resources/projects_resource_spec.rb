@@ -3,6 +3,7 @@ require "spec_helper"
 describe Floorplanner::Resources::ProjectsResource do
   class described_class::ClientStub
     attr_reader :path_xml
+    attr_reader :post_xml
 
     def initialize
       @path_xml = {}
@@ -13,6 +14,7 @@ describe Floorplanner::Resources::ProjectsResource do
     end
 
     def post(path, xml)
+      @post_xml = xml
       response(201, path)
     end
 
@@ -76,6 +78,25 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(projects[1].id).to be(29261186)
       expect(projects[2].id).to be(29255071)
       expect(projects[3].id).to be(29253756)
+    end
+  end
+
+  describe "#create" do
+    it "posts a project XML to Floorplanner" do
+      f = Floorplanner::Models::Floor.new
+      f.name = "Ground floor"
+      f.drawing_url = "http://example.com/some-image.jpg"
+
+      p = Floorplanner::Models::Project.new
+      p.name = "Portveien 2"
+      p.description = "A nice little house with 2 floors"
+      p.public = false
+      p.external_identifier = "ID123"
+      p.floors = [f]
+
+      subject.create(p)
+
+      expect(client.post_xml).to eq(remove_whitespace(read_xml("create")))
     end
   end
 end

@@ -1,0 +1,12 @@
+<project>
+    <name>Portveien 2</name>
+    <description>A nice little house with 2 floors</description>
+    <public>false</public>
+    <external-identifier>ID123</external-identifier>
+    <floors type="array">
+        <floor>
+            <name>Ground floor</name>
+            <drawing-url>http://example.com/some-image.jpg</drawing-url>
+        </floor>
+    </floors>
+</project>
