@@ -12,6 +12,14 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
+      def create(project)
+        client.post("projects.xml", project.to_xml)
+      end
+
+      def create_floor(id, floor)
+        client.post("projects/#{id}/floors.xml", floor.to_xml)
+      end
+
       def export(id, width:, height:, callback: nil, send_to: nil, type: nil,
                 paper_scale: nil, scaling: nil, scalebar: nil, black_white: nil)
 
