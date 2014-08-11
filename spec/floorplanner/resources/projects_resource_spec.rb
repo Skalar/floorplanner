@@ -52,7 +52,16 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(floor.created_at).to eq(Time.new(2014, 8, 8, 8, 59, 32, "-04:00"))
       expect(floor.updated_at).to eq(Time.new(2014, 8, 8, 8, 59, 32, "-04:00"))
       expect(floor.designs).to be_empty
-      #expect(floor.drawing)
+
+      drawing = floor.drawing
+
+      expect(drawing.id).to be(1380134)
+      expect(drawing.url).to eq("http://cdn.floorplanner.com/uploads/drawings/1380134/S.R._Thompson_House.jpg")
+      expect(drawing.content_type).to eq("image/jpeg")
+      expect(drawing.position).to eq("7.50 5.00 0.00")
+      expect(drawing.size).to eq("20.00 15.00 0.00")
+      expect(drawing.alpha).to eq(50.0)
+      expect(drawing.visible).to eq("1")
     end
   end
 end

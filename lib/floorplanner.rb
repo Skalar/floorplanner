@@ -9,6 +9,7 @@ require "hashie"
 
 require "floorplanner/models/model"
 require "floorplanner/models/design"
+require "floorplanner/models/drawing"
 require "floorplanner/models/floor"
 require "floorplanner/models/project"
 
