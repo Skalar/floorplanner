@@ -13,10 +13,14 @@ module Floorplanner
       end
     end
 
-    class Model < Hashie::Dash
+    class Model < Hashie::Trash
       include Hashie::Extensions::Coercion
       include Hashie::Extensions::IgnoreUndeclared
 
+      ELEMENT_TRANSFORMATIONS = {
+        Time => lambda { |v| Time.parse(v) },
+        Float => lambda { |v| v.to_f }
+      }
 
       # These properties are declared for
       # compatability with Gyoku
@@ -27,8 +31,8 @@ module Floorplanner
         @complex_elements ||= {}
       end
 
-      def self.element(name_sym)
-        property name_sym
+      def self.element(name_sym, type = nil)
+        property name_sym, {transform_with: ELEMENT_TRANSFORMATIONS[type]}
       end
 
       def self.complex(name_sym, type)

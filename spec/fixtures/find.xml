@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <created-at type="datetime">2014-08-08T08:59:32-04:00</created-at>
+  <description></description>
+  <element-library-id type="integer">1</element-library-id>
+  <enable-autosave type="boolean">false</enable-autosave>
+  <exported-at type="datetime"></exported-at>
+  <external-identifier>ID2345</external-identifier>
+  <grid-cell-size type="decimal"></grid-cell-size>
+  <grid-sub-cell-size type="decimal"></grid-sub-cell-size>
+  <id type="integer">29261344</id>
+  <name>Skalar test</name>
+  <original-project-id type="integer"></original-project-id>
+  <project-url>jz4sdc</project-url>
+  <public type="boolean">false</public>
+  <texture-library-id type="integer">1</texture-library-id>
+  <updated-at type="datetime">2014-08-08T08:59:33-04:00</updated-at>
+  <user-id type="integer">26011672</user-id>
+  <wall-thickness type="decimal">0.25</wall-thickness>
+  <floors type="array">
+    <floor>
+      <id type="integer">35485287</id>
+      <name>Ground floor</name>
+      <level type="integer">0</level>
+      <height type="decimal">2.8</height>
+      <created-at>2014-08-08 08:59:32 -0400</created-at>
+      <updated-at>2014-08-08 08:59:32 -0400</updated-at>
+      <designs type="array">
+      </designs>
+      <drawing>
+        <id type="integer">1380134</id>
+        <url>http://cdn.floorplanner.com/uploads/drawings/1380134/S.R._Thompson_House.jpg</url>
+        <content_type>image/jpeg</content_type>
+        <position>7.50 5.00 0.00</position>
+        <size>20.00 15.00 0.00</size>
+        <alpha>50.00</alpha>
+        <visible>1</visible>
+      </drawing>
+    </floor>
+  </floors>
+</project>

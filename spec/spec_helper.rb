@@ -1,10 +1,8 @@
 require 'bundler/setup'
 require 'floorplanner'
 
-require 'webmock/rspec'
-
-WebMock.disable_net_connect!
+require_relative 'helpers'
 
 RSpec.configure do |c|
-  c.treat_symbols_as_metadata_keys_with_true_values = true
+  c.include Helpers
 end
