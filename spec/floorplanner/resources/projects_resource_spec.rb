@@ -28,7 +28,7 @@ describe Floorplanner::Resources::ProjectsResource do
   subject { described_class.new(client) }
 
   describe "#find" do
-    it "should return a project with data from XML" do
+    it "should return a project with data from the response XML" do
       client.path_xml["projects/29261344.xml"] = read_xml("find")
 
       project = subject.find(29261344)
