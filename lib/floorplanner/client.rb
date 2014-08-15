@@ -7,6 +7,23 @@ module Floorplanner
       @protocol = protocol
     end
 
+    # Returns an instance based
+    # on values from the following
+    # environment variables:
+    #
+    # FLOORPLANNER_API_KEY
+    # FLOORPLANNER_PASSWORD
+    # FLOORPLANNER_SUBDOMAIN
+    #
+    # The instance will use https.
+    def self.from_env
+      new(
+        api_key: ENV["FLOORPLANNER_API_KEY"],
+        password: ENV["FLOORPLANNER_PASSWORD"],
+        subdomain: ENV["FLOORPLANNER_SUBDOMAIN"]
+      )
+    end
+
     def get(resource_path)
       res = HTTPI.get(build_request(resource_path))
       check_result(res)
