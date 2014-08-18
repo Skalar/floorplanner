@@ -4,6 +4,7 @@ describe Floorplanner::Resources::ProjectsResource do
   class described_class::ClientStub
     attr_reader :path_xml
     attr_reader :post_xml
+    attr_reader :post_path
 
     def initialize
       @path_xml = {}
@@ -15,6 +16,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
     def post(path, xml)
       @post_xml = xml
+      @post_path = path
       response(201, path)
     end
 
@@ -97,6 +99,14 @@ describe Floorplanner::Resources::ProjectsResource do
       subject.create(p)
 
       expect(client.post_xml).to eq(remove_whitespace(read_xml("create")))
+    end
+  end
+
+  describe "#add_collaborator" do
+    it "posts a collaborator XML to Floorplanner" do
+      subject.add_collaborator(123, email: "test@example.com")
+      expect(client.post_path).to eq("projects/123/collaborate.xml")
+      expect(client.post_xml).to eq("<email>test@example.com</email>")
     end
   end
 end

@@ -20,6 +20,11 @@ module Floorplanner
         client.post("projects/#{id}/floors.xml", floor.to_xml)
       end
 
+      def add_collaborator(id, email:)
+        xml = Gyoku.xml({email: email})
+        client.post("projects/#{id}/collaborate.xml", xml)
+      end
+
       def export(id, width:, height:, callback: nil, send_to: nil, type: nil,
                 paper_scale: nil, scaling: nil, scalebar: nil, black_white: nil)
 
