@@ -45,9 +45,9 @@ module Floorplanner
           result_hash = Nori.new.parse(res.body)
           error_messages = result_hash["errors"]["error"]
           error_messages = Array.try_convert(error_messages) || [error_messages]
-          raise Error, "HTTP error #{res.code} - #{error_messages.join(", ")}", res.body
+          raise Error.new("HTTP error #{res.code} - #{error_messages.join(", ")}", res.body)
         else
-          raise Error, "HTTP error #{res.code}", res.body
+          raise Error.new("HTTP error #{res.code}", res.body)
         end
       end
 
