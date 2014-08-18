@@ -17,6 +17,7 @@ require "floorplanner/client"
 
 require "floorplanner/resources/resource"
 require "floorplanner/resources/projects_resource"
+require "floorplanner/resources/users_resource"
 
 module Floorplanner
 end
