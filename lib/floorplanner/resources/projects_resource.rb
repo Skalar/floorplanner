@@ -13,7 +13,8 @@ module Floorplanner
       end
 
       def create(project)
-        client.post("projects.xml", project.to_xml)
+        res = client.post("projects.xml", project.to_xml)
+        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
       def create_floor(id, floor)

@@ -100,6 +100,14 @@ describe Floorplanner::Resources::ProjectsResource do
 
       expect(client.post_xml).to eq(remove_whitespace(read_xml("create")))
     end
+
+    it "returns an instance of Floorplanner::Models::Project for the created project" do
+      client.path_xml["projects.xml"] = read_xml("create_response")
+      doc = Floorplanner::Models::ProjectDocument.from_xml(read_xml("create"))
+      created = subject.create(doc.project)
+      expect(created.class).to be(Floorplanner::Models::Project)
+      expect(created.id).to be(29231859)
+    end
   end
 
   describe "#add_collaborator" do
