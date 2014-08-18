@@ -41,7 +41,14 @@ module Floorplanner
 
     def check_result(res)
       if res.error?
-        raise Error, "HTTP error #{res.code} - #{res.body}" 
+        if res.body.match("<errors>")
+          result_hash = Nori.new.parse(res.body)
+          error_messages = result_hash["errors"]["error"]
+          error_messages = Array.try_convert(error_messages) || [error_messages]
+          raise Error, "HTTP error #{res.code} - #{error_messages.join(", ")}", res.body
+        else
+          raise Error, "HTTP error #{res.code}", res.body
+        end
       end
 
       res
@@ -58,6 +65,12 @@ module Floorplanner
     end
 
     class Error < StandardError
+      attr_reader :response_body
+
+      def initialize(msg, response_body)
+        super(msg)
+        @response_body = response_body
+      end
     end
   end
 end
