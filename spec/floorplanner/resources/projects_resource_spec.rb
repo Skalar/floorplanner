@@ -117,4 +117,13 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(client.post_xml).to eq("<email>test@example.com</email>")
     end
   end
+
+  describe "#export" do
+    it "returns the FML (xml) returned from the server" do
+      xml = "<project><test>foobar</test></project>"
+      client.path_xml["projects/123/export.xml"] = xml
+      result = subject.export(123)
+      expect(result).to eq(xml)
+    end
+  end
 end

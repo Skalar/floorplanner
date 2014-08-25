@@ -26,7 +26,12 @@ module Floorplanner
         client.post("projects/#{id}/collaborate.xml", xml)
       end
 
-      def export(id, width:, height:, callback: nil, send_to: nil, type: nil,
+      def export(id)
+        res = client.get("projects/#{id}/export.xml")
+        res.body
+      end
+
+      def render(id, width:, height:, callback: nil, send_to: nil, type: nil,
                 paper_scale: nil, scaling: nil, scalebar: nil, black_white: nil)
 
         raise ArgumentError, "width: cannot be nil" if width.nil?
