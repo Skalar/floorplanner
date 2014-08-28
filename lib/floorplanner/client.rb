@@ -7,6 +7,14 @@ module Floorplanner
       @protocol = protocol
     end
 
+    def self.logger
+      @logger ||= Logger.new(STDOUT).tap { |l| l.level = Logger::WARN }
+    end
+
+    def self.logger=(logger)
+      @logger = logger
+    end
+
     # Returns an instance based
     # on values from the following
     # environment variables:
@@ -25,11 +33,15 @@ module Floorplanner
     end
 
     def get(resource_path)
+      logger.debug("GET to #{resource_path}")
+
       res = HTTPI.get(build_request(resource_path))
       check_result(res)
     end
 
     def post(resource_path, xml)
+      logger.debug("POST to #{resource_path}\n\n#{xml}")
+
       req = build_request(resource_path)
       req.body = xml
       req.headers["Content-Type"] = "text/xml"
@@ -62,6 +74,10 @@ module Floorplanner
 
     def build_url(resource_path)
       "#{@protocol}://#{@subdomain}.floorplanner.com/#{resource_path}"
+    end
+
+    def logger
+      self.class.logger
     end
 
     class Error < StandardError
