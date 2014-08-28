@@ -152,7 +152,7 @@ describe Floorplanner::Resources::ProjectsResource do
       expect { subject.render(123, width: 500, height: 500, send_to: "test@example.com") }.to_not raise_error
     end
 
-    it "posts an XML request to the Floorplanner server" do
+    it "posts an XML request to the project render endpoint on the Floorplanner server" do
       xml = read_xml("render_request")
 
       subject.render(123,
@@ -168,6 +168,20 @@ describe Floorplanner::Resources::ProjectsResource do
 
       expect(client.post_path).to eq("projects/123/render")
       expect(client.post_xml).to eq(remove_whitespace(xml))
+    end
+  end
+
+  describe "#publish" do
+    it "raises the first returned error from the publish configuration as an error" do
+      config = Floorplanner::Models::PublishConfiguration.new(path: nil)
+      expect { subject.publish(123, config) }.to raise_error(config.errors.first)
+    end
+
+    it "posts an XML request to the project publish configuration endpoint on the Floorplanner server" do
+      config = Floorplanner::Models::PublishConfiguration.new(path: "foobar")
+      subject.publish(123, config)
+      expect(client.post_path).to eq("projects/123/configuration.xml")
+      expect(client.post_xml).to eq(config.to_xml)
     end
   end
 end

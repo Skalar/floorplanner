@@ -80,7 +80,7 @@ module Floorplanner
       end
 
       def element_name
-        self.class.name.split("::").last.downcase
+        self.class.name.split("::").last.split(/(?=[A-Z])/).join("-").downcase
       end
 
       private

@@ -13,6 +13,8 @@ require "floorplanner/models/drawing"
 require "floorplanner/models/floor"
 require "floorplanner/models/project"
 
+require "floorplanner/models/publish_configuration"
+
 require "floorplanner/client"
 
 require "floorplanner/resources/resource"

@@ -60,6 +60,11 @@ module Floorplanner
         client.post("projects/#{id}/render", xml)
       end
 
+      def publish(id, project_configuration)
+        raise project_configuration.errors.first if project_configuration.errors.any?
+        client.post("projects/#{id}/configuration.xml", project_configuration.to_xml)
+      end
+
       private
 
       def add_if_present(hash, key, value)
