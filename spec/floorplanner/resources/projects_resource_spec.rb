@@ -183,5 +183,15 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(client.post_path).to eq("projects/123/configuration.xml")
       expect(client.post_xml).to eq(config.to_xml)
     end
+
+    it "returns the publish configuration from Floorplanner" do
+      xml = "<publish-configuration><path>path from fp</path></project-configuration>"
+      client.path_xml["projects/123/configuration.xml"] = xml
+
+      config = Floorplanner::Models::PublishConfiguration.new(path: "foobar")
+      result = subject.publish(123, config)
+
+      expect(result.path).to eq("path from fp")
+    end
   end
 end

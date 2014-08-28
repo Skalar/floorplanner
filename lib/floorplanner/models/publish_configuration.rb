@@ -27,5 +27,9 @@ module Floorplanner
         end
       end
     end
+
+    class PublishConfigurationDocument < Model
+      complex :publish_configuration, PublishConfiguration
+    end
   end
 end

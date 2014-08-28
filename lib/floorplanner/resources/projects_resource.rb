@@ -62,7 +62,11 @@ module Floorplanner
 
       def publish(id, project_configuration)
         raise project_configuration.errors.first if project_configuration.errors.any?
-        client.post("projects/#{id}/configuration.xml", project_configuration.to_xml)
+        res = client.post("projects/#{id}/configuration.xml", project_configuration.to_xml)
+        ::Floorplanner::Models::PublishConfigurationDocument.from_xml(res.body).publish_configuration
+      end
+
+      def unpublish(id)
       end
 
       private
