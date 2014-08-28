@@ -3,24 +3,24 @@ require "spec_helper"
 describe Floorplanner::Models::PublishConfiguration do
   describe "#errors" do
     it "returns an empty array if there are no errors" do
-      config = Floorplanner::Models::PublishConfiguration.new(path: "something")
+      config = described_class.new(path: "something")
       expect(config.errors).to be_empty
     end
 
     it "returns an array including 1 error message if path is nil" do
-      config = Floorplanner::Models::PublishConfiguration.new(path: nil)
+      config = described_class.new(path: nil)
       expect(config.errors).to include("path is missing")
     end
 
     it "returns an array including 1 error message if path is an empty string" do
-      config = Floorplanner::Models::PublishConfiguration.new(path: "")
+      config = described_class.new(path: "")
       expect(config.errors).to include("path is missing")
     end
   end
 
   describe "#to_xml" do
     it "returns an xml representation including all declared elements" do
-      config = Floorplanner::Models::PublishConfiguration.new(
+      config = described_class.new(
         id: 123,
         path: "901of77",
         style_id: 555,
