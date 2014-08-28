@@ -49,6 +49,13 @@ module Floorplanner
       check_result(res)
     end
 
+    def delete(resource_path)
+      logger.debug("DELETE to #{resource_path}")
+
+      res = HTTPI.delete(build_request(resource_path))
+      check_result(res)
+    end
+
     private
 
     def check_result(res)

@@ -1,32 +1,6 @@
 require "spec_helper"
 
 describe Floorplanner::Resources::ProjectsResource do
-  class described_class::ClientStub
-    attr_reader :path_xml
-    attr_reader :post_xml
-    attr_reader :post_path
-
-    def initialize
-      @path_xml = {}
-    end
-
-    def get(path)
-      response(200, path)
-    end
-
-    def post(path, xml)
-      @post_xml = xml
-      @post_path = path
-      response(201, path)
-    end
-
-    private
-
-    def response(code, path)
-      HTTPI::Response.new(code, {}, path_xml[path])
-    end
-  end
-
   let(:client) { described_class::ClientStub.new }
 
   subject { described_class.new(client) }
@@ -192,6 +166,52 @@ describe Floorplanner::Resources::ProjectsResource do
       result = subject.publish(123, config)
 
       expect(result.path).to eq("path from fp")
+    end
+  end
+
+  describe "#unpublish" do
+    it "deletes the publish configuration" do
+      subject.unpublish(123)
+      expect(client.delete_path).to eq("projects/123/configuration.xml")
+    end
+
+    it "returns the project returned from Floorplanner" do
+      xml = "<project><id>123</id></project>"
+      client.path_xml["projects/123/configuration.xml"] = xml
+      res = subject.unpublish(123)
+      expect(res.id.to_i).to be(123)
+    end
+  end
+
+  class described_class::ClientStub
+    attr_reader :path_xml
+    attr_reader :post_xml
+    attr_reader :post_path
+    attr_reader :delete_path
+
+    def initialize
+      @path_xml = {}
+    end
+
+    def get(path)
+      response(200, path)
+    end
+
+    def post(path, xml)
+      @post_xml = xml
+      @post_path = path
+      response(201, path)
+    end
+
+    def delete(path)
+      @delete_path = path
+      response(200, path)
+    end
+
+    private
+
+    def response(code, path)
+      HTTPI::Response.new(code, {}, path_xml[path])
     end
   end
 end

@@ -67,6 +67,8 @@ module Floorplanner
       end
 
       def unpublish(id)
+        res = client.delete("projects/#{id}/configuration.xml")
+        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
       private
