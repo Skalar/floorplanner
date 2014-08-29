@@ -7,7 +7,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#find" do
     it "should return a project with data from the response XML" do
-      client.path_xml["projects/29261344.xml"] = read_xml("find")
+      client.path_body["projects/29261344.xml"] = read_xml("find")
 
       project = subject.find(29261344)
 
@@ -45,7 +45,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#all" do
     it "returns an array of projects based on the response XML" do
-      client.path_xml["projects.xml"] = read_xml("all")
+      client.path_body["projects.xml"] = read_xml("all")
 
       projects = subject.all
 
@@ -76,7 +76,7 @@ describe Floorplanner::Resources::ProjectsResource do
     end
 
     it "returns an instance of Floorplanner::Models::Project for the created project" do
-      client.path_xml["projects.xml"] = read_xml("create_response")
+      client.path_body["projects.xml"] = read_xml("create_response")
       doc = Floorplanner::Models::ProjectDocument.from_xml(read_xml("create"))
       created = subject.create(doc.project)
       expect(created.class).to be(Floorplanner::Models::Project)
@@ -95,7 +95,7 @@ describe Floorplanner::Resources::ProjectsResource do
   describe "#export" do
     it "returns the FML (xml) returned from the server" do
       xml = "<project><test>foobar</test></project>"
-      client.path_xml["projects/123/export.xml"] = xml
+      client.path_body["projects/123/export.xml"] = xml
       result = subject.export(123)
       expect(result).to eq(xml)
     end
@@ -120,6 +120,85 @@ describe Floorplanner::Resources::ProjectsResource do
     end
   end
 
+  describe "#render_2d" do
+    it "posts a JSON request to the project render_2d endpoint" do
+      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, filetype: "pdf")
+      expect(client.post_path).to eq("projects/123/render_2d.json")
+
+      json = JSON.parse(client.post_json)
+      expect(json["callback"]).to eq("http://example.com")
+      expect(json["width"]).to be(500)
+      expect(json["height"]).to be(400)
+      expect(json["filetype"]).to eq("pdf")
+    end
+  end
+
+  describe "#render_3d" do
+    let(:opts) {
+      {
+        callback: "http://example.com",
+        width: 500,
+        height: 400,
+        section: 1500,
+        view: "top",
+        filetype: "jpg"
+      }
+    }
+
+    it "raises an error if view contains an unsupported option" do
+      opts[:view] = "invalid"
+      expect { subject.render_3d(123, **opts) }.to raise_error("Unsupported view type: invalid")
+    end
+
+    it "supports the view types [se sw ne nw top]" do
+      %w{ se sw ne nw top }.each do |viewtype|
+        opts[:view] = viewtype
+        expect { subject.render_3d(123, **opts) }.not_to raise_error
+      end
+    end
+
+    it "raises an error if filetype contains an unsupported option" do
+      expect { 
+        subject.render_3d(123,
+          callback: "http://example.com",
+          width: 500,
+          height: 400,
+          section: 1500,
+          view: "sw",
+          filetype: "gif"
+        )
+      }.to raise_error("Unsupported filetype: gif")
+    end
+
+    it "supports the filetypes [pdf jpg png]" do
+      %w{ pdf jpg png }.each do |filetype|
+        opts[:filetype] = filetype
+        expect { subject.render_3d(123, **opts) }.not_to raise_error
+      end
+    end
+
+    it "posts a JSON request to the project render_3d endpoint" do
+      subject.render_3d(123,
+        callback: "http://example.com",
+        width: 500,
+        height: 400,
+        section: 1500,
+        view: "top",
+        filetype: "jpg"
+      )
+
+      expect(client.post_path).to eq("projects/123/render_3d.json")
+
+      json = JSON.parse(client.post_json)
+      expect(json["callback"]).to eq("http://example.com")
+      expect(json["width"]).to be(500)
+      expect(json["height"]).to be(400)
+      expect(json["section"]).to be(1500)
+      expect(json["view"]).to eq("top")
+      expect(json["filetype"]).to eq("jpg")
+    end
+  end
+
   describe "#publish" do
     it "raises the first returned error from the publish configuration as an error" do
       config = Floorplanner::Models::PublishConfiguration.new(path: nil)
@@ -135,7 +214,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
     it "returns the publish configuration from Floorplanner" do
       xml = "<publish-configuration><path>path from fp</path></project-configuration>"
-      client.path_xml["projects/123/configuration.xml"] = xml
+      client.path_body["projects/123/configuration.xml"] = xml
 
       config = Floorplanner::Models::PublishConfiguration.new(path: "foobar")
       result = subject.publish(123, config)
@@ -152,27 +231,29 @@ describe Floorplanner::Resources::ProjectsResource do
 
     it "returns the project returned from Floorplanner" do
       xml = "<project><id>123</id></project>"
-      client.path_xml["projects/123/configuration.xml"] = xml
+      client.path_body["projects/123/configuration.xml"] = xml
       res = subject.unpublish(123)
       expect(res.id.to_i).to be(123)
     end
   end
 
   class described_class::ClientStub
-    attr_reader :path_xml
+    attr_reader :path_body
     attr_reader :post_xml
     attr_reader :post_path
     attr_reader :delete_path
 
+    alias_method :post_json, :post_xml
+
     def initialize
-      @path_xml = {}
+      @path_body = {}
     end
 
     def get(path)
       response(200, path)
     end
 
-    def post(path, xml)
+    def post(path, xml, content_type: "text/xml")
       @post_xml = xml
       @post_path = path
       response(201, path)
@@ -186,7 +267,7 @@ describe Floorplanner::Resources::ProjectsResource do
     private
 
     def response(code, path)
-      HTTPI::Response.new(code, {}, path_xml[path])
+      HTTPI::Response.new(code, {}, path_body[path])
     end
   end
 end

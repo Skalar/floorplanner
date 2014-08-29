@@ -2,6 +2,8 @@ require "floorplanner/version"
 
 require "bundler/setup"
 
+require "json"
+
 require "httpi"
 require "nori"
 require "gyoku"
