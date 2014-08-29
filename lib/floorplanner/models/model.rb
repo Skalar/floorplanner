@@ -2,7 +2,11 @@ module Floorplanner
   module Models
     module ComplexElement
       def self.to_xml(value)
-        value.to_xml(include_root: false)
+        if value.class.namespace
+          { :@xmlns => value.class.namespace, :content! => value.to_xml(include_root: false) }
+        else
+          value.to_xml(include_root: false)
+        end
       end
     end
 
@@ -29,6 +33,14 @@ module Floorplanner
 
       def self.complex_elements
         @complex_elements ||= {}
+      end
+
+      def self.namespace=(ns)
+        @namespace = ns
+      end
+
+      def self.namespace
+        @namespace
       end
 
       def self.element(name_sym, type = nil)
@@ -62,17 +74,21 @@ module Floorplanner
         xml_hash = {}
 
         each do |key, value|
-          element_name = key.to_s.gsub("_", "-").to_sym
+          element_name = key.to_s.gsub("_", "-")
 
           complex = self.class.complex_elements[key]
           if complex
-            xml_hash[element_name] = complex.to_xml(value)
+            xml_hash[element_name.concat("!").to_sym] = complex.to_xml(value)
           else
-            xml_hash[element_name] = value
+            xml_hash[element_name.to_sym] = value
           end
         end
         
         if include_root
+          if self.class.namespace
+            xml_hash = { :@xmlns => self.class.namespace, :content! => xml_hash }
+          end
+
           xml_hash = {element_name.to_sym => xml_hash}
         end
 

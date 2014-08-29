@@ -102,46 +102,21 @@ describe Floorplanner::Resources::ProjectsResource do
   end
 
   describe "#render" do
-    it "raises an error if width is nil" do
-      expect { subject.render(123, width: nil, height: 500, callback: "http://example.com/foobar") }.to raise_error
+    it "raises an exception for the first returned error message from the export object" do
+      export = Floorplanner::Models::Export.new
+      expect { subject.render(123, export) }.to raise_error(export.errors.first)
     end
 
-    it "raises an error if height is nil" do
-      expect { subject.render(123, width: 500, height: nil, callback: "http://example.com/foobar") }.to raise_error
-    end
-
-    it "raises an error if both callback and send_to are missing" do
-      expect { subject.render(123, width: 500, height: 500) }.to raise_error
-    end
-
-    it "raises an error if both callback and send_to are given" do
-      expect { subject.render(123, width: 500, height: 500, callback: "http://foobar.com", send_to: "test@example.com") }.to raise_error
-    end
-
-    it "raises NO error if width, height and callback are given" do
-      expect { subject.render(123, width: 500, height: 500, callback: "http://foobar.com") }.to_not raise_error
-    end
-
-    it "raises NO error if width, height and send_to are given" do
-      expect { subject.render(123, width: 500, height: 500, send_to: "test@example.com") }.to_not raise_error
-    end
 
     it "posts an XML request to the project render endpoint on the Floorplanner server" do
-      xml = read_xml("render_request")
-
-      subject.render(123,
-        width: 500,
-        height: 500,
-        callback: "http://example.com/callback",
-        type: "application/pdf",
-        paper_scale: 0.003,
-        scaling: "constant",
-        scalebar: 1,
-        black_white: false
+      export = Floorplanner::Models::Export.new(
+        resolution: Floorplanner::Models::Resolution.new(width: 200, height: 200),
+        callback: "http://example.com"
       )
+      subject.render(123, export)
 
       expect(client.post_path).to eq("projects/123/render")
-      expect(client.post_xml).to eq(remove_whitespace(xml))
+      expect(client.post_xml).to eq(export.to_xml)
     end
   end
 

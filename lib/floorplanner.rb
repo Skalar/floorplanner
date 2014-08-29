@@ -14,6 +14,8 @@ require "floorplanner/models/floor"
 require "floorplanner/models/project"
 
 require "floorplanner/models/publish_configuration"
+require "floorplanner/models/resolution"
+require "floorplanner/models/export"
 
 require "floorplanner/client"
 
