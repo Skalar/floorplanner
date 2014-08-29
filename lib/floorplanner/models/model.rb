@@ -2,18 +2,14 @@ module Floorplanner
   module Models
     module ComplexElement
       def self.to_xml(value)
-        if value.class.namespace
-          { :@xmlns => value.class.namespace, :content! => value.to_xml(include_root: false) }
-        else
-          value.to_xml(include_root: false)
-        end
+        value.to_unrooted_xml_hash
       end
     end
 
     module ComplexArrayElement
       def self.to_xml(value)
         element_name = "#{value.first.element_name}!"
-        {:@type => "array", :content! => { element_name.to_sym => value.map { |v| v.to_xml(include_root: false) }}}
+        { :@type => "array", :content! => { element_name.to_sym => value.map { |v| v.to_unrooted_xml_hash[:content!] } } }
       end
     end
 
@@ -70,33 +66,35 @@ module Floorplanner
         new(hash)
       end
 
-      def to_xml(include_root: true)
-        xml_hash = {}
-
-        each do |key, value|
-          element_name = key.to_s.gsub("_", "-")
-
-          complex = self.class.complex_elements[key]
-          if complex
-            xml_hash[element_name.concat("!").to_sym] = complex.to_xml(value)
-          else
-            xml_hash[element_name.to_sym] = value
-          end
-        end
-        
-        if include_root
-          if self.class.namespace
-            xml_hash = { :@xmlns => self.class.namespace, :content! => xml_hash }
-          end
-
-          xml_hash = {element_name.to_sym => xml_hash}
-        end
-
-        Gyoku.xml(xml_hash)
+      def to_xml
+        Gyoku.xml(element_name => to_unrooted_xml_hash)
       end
 
+      def to_unrooted_xml_hash
+        xml_hash = { :content! => {} }
+
+        if self.class.namespace
+          xml_hash[:@xmlns] = self.class.namespace
+        end
+
+        each do |key, value|
+          element_name_for_key = key.to_s.gsub("_", "-")
+
+          complex = self.class.complex_elements[key]
+
+          if complex
+            xml_hash[:content!][element_name_for_key.concat("!").to_sym] = complex.to_xml(value)
+          else
+            xml_hash[:content!][element_name_for_key.to_sym] = value
+          end
+        end
+
+        xml_hash
+      end
+
+      # element_name("Foo::Bar::MyCoolElement") #=> :my-cool-element
       def element_name
-        self.class.name.split("::").last.split(/(?=[A-Z])/).join("-").downcase
+        self.class.name.split("::").last.split(/(?=[A-Z])/).join("-").downcase.to_sym
       end
 
       private
