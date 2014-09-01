@@ -1,0 +1,10 @@
+rvm:
+- 2.1.0
+- 2.1.2
+- ruby-head
+matrix:
+  allow_failures:
+  - rvm: ruby-head
+notifications:
+  flowdock:
+    secure: Jjtz6uIhYGnu9cAs6+q77ntZcK7IFCroXTvLnLjHTZkyWhjnw5Y5BqLvSqE0u/HUyVR1dSVpkbuEfWLv27bQXJebDGQqQoQD1V3oJVUFu6Cl816DuHENP8KR3Jr63nmSmBV7qq7BvKeWJwbogYe6XJDQb95CdERwGRT5earkGhk=

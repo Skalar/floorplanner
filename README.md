@@ -2,6 +2,8 @@
 
 Ruby interface working against floor planners API.
 
+[![Build Status](https://travis-ci.org/Skalar/floorplanner.svg?branch=master)](https://travis-ci.org/Skalar/floorplanner)
+
 ## TODO
 
 As this is more or less a stub of the ruby API, only able to do a couple of things (read and update users)
