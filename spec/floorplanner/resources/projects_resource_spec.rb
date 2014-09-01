@@ -84,6 +84,13 @@ describe Floorplanner::Resources::ProjectsResource do
     end
   end
 
+  describe "#delete" do
+    it "deletes the project with the given id from Floorplanner" do
+      subject.delete(123)
+      expect(client.delete_path).to eq("projects/123.xml")
+    end
+  end
+
   describe "#add_collaborator" do
     it "posts a collaborator XML to Floorplanner" do
       subject.add_collaborator(123, email: "test@example.com")

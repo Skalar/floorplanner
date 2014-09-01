@@ -17,6 +17,10 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
+      def delete(id)
+        client.delete("projects/#{id}.xml")
+      end
+
       def create_floor(id, floor)
         client.post("projects/#{id}/floors.xml", floor.to_xml)
       end
