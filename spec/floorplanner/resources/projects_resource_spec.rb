@@ -128,9 +128,9 @@ describe Floorplanner::Resources::ProjectsResource do
   end
 
   describe "#render_2d" do
-    it "posts a JSON request to the project render_2d endpoint" do
+    it "posts a JSON request to the project render2d endpoint" do
       subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, filetype: "pdf")
-      expect(client.post_path).to eq("projects/123/render_2d.json")
+      expect(client.post_path).to eq("projects/123/render2d.json")
 
       json = JSON.parse(client.post_json)
       expect(json["callback"]).to eq("http://example.com")
@@ -184,7 +184,7 @@ describe Floorplanner::Resources::ProjectsResource do
       end
     end
 
-    it "posts a JSON request to the project render_3d endpoint" do
+    it "posts a JSON request to the project render3d endpoint" do
       subject.render_3d(123,
         callback: "http://example.com",
         width: 500,
@@ -194,7 +194,7 @@ describe Floorplanner::Resources::ProjectsResource do
         filetype: "jpg"
       )
 
-      expect(client.post_path).to eq("projects/123/render_3d.json")
+      expect(client.post_path).to eq("projects/123/render3d.json")
 
       json = JSON.parse(client.post_json)
       expect(json["callback"]).to eq("http://example.com")

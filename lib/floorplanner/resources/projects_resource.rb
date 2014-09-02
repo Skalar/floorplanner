@@ -42,7 +42,7 @@ module Floorplanner
 
       def render_2d(id, callback:, width:, height:, filetype:)
         json = { callback: callback, width: width, height: height, filetype: filetype }.to_json
-        client.post("projects/#{id}/render_2d.json", json, content_type: "application/json")
+        client.post("projects/#{id}/render2d.json", json, content_type: "application/json")
       end
 
       def render_3d(id, callback:, width:, height:, section:, view:, filetype:)
@@ -58,7 +58,7 @@ module Floorplanner
           filetype: filetype
         }.to_json
 
-        client.post("projects/#{id}/render_3d.json", json, content_type: "application/json")
+        client.post("projects/#{id}/render3d.json", json, content_type: "application/json")
       end
 
       def publish(id, project_configuration)
