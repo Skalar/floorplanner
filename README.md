@@ -4,24 +4,6 @@ Ruby interface working against floor planners API.
 
 [![Build Status](https://travis-ci.org/Skalar/floorplanner.svg?branch=master)](https://travis-ci.org/Skalar/floorplanner)
 
-## TODO
-
-As this is more or less a stub of the ruby API, only able to do a couple of things (read and update users)
-I'm writing this list so I remember where to begin, if Inviso decides to go for floorplanner:
-
-
-* Make a clean http client interface. #build_request is kinda there, but I don't like that methods in FinderMethods and Persistence is
-  calling build_request directly.
-* Fix init of records. Initialize is to be used creating new records and marking them as new_records, while #instantiate should be used internally
-  after loading records and marking records as not new records.
-* Make a simple schema definition, more or less only listing attributes which we can use for instance to generate read and write methods (see below).
-* Use ActiveModel::AttributeMethods for read method and write method.
-* Validations. Simply use ActiveModel validations and do some client side validation on records before #save.
-* Floorplanner API supports search. We should too?
-* Floorplanner API supports pagination. We should too?
-
-
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -38,7 +20,34 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```Ruby
+# Create a client for authenticated requests
+client = Floorplanner::Client.new(api_key: 'yourkey', password: 'yourpwd', subdomain: 'skalar')
+
+# Create a resource for Project API helper methods
+resource = Floorplanner::Resources::ProjectsResource.new(client)
+
+# Set up a project
+new_project = Floorplanner::Models::Project.new(
+  name: "My test project",
+  description: "For demonstration purposes only",
+  public: true
+)
+
+# Create the project in Floorplanner, returning a new Floorplanner::Models::Project
+# instance with an id assigned by Floorplanner
+created = resource.create(new_project)
+
+# Let someone help you draw the floor plans
+resource.add_collaborator(created.id, email: 'drawer@example.com')
+
+# Render a 2D version of the project
+resource.render_2d(created.id, callback: 'http://my.server.com/callback-handler', width: 2000, height: 1500, filetype: 'jpg')
+
+# Check out lib/floorplanner/resources/projects_resource.rb for more helper methods.
+# There is also Floorplanner::Resources::UsersResource with a helper method for
+# creating authentication tokens for use in the embedded JavaScript/Flash editor.
+```
 
 ## Contributing
 
