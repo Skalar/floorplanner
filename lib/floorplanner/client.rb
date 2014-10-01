@@ -49,6 +49,16 @@ module Floorplanner
       check_result(res)
     end
 
+    def put(resource_path, body, content_type: "text/xml")
+      logger.debug("PUT to #{resource_path} as #{content_type}:\n\n#{body}")
+
+      req = build_request(resource_path)
+      req.body = body
+      req.headers["Content-Type"] = content_type
+      res = HTTPI.put(req)
+      check_result(res)
+    end
+
     def delete(resource_path)
       logger.debug("DELETE to #{resource_path}")
 

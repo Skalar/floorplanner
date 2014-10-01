@@ -17,6 +17,11 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
+      def overwrite(id, fml_xml:)
+        res = client.put("projects/#{id}.xml", fml_xml)
+        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+      end
+
       def delete(id)
         client.delete("projects/#{id}.xml")
       end
