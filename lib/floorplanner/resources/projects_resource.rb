@@ -45,14 +45,13 @@ module Floorplanner
         client.post("projects/#{id}/render", export.to_xml)
       end
 
-      def render_2d(id, callback:, width:, height:, filetype:)
-        json = { callback: callback, width: width, height: height, filetype: filetype }.to_json
+      def render_2d(id, callback:, width:, height:, combine:)
+        json = { callback: callback, width: width, height: height, combine: combine }.to_json
         client.post("projects/#{id}/render2d.json", json, content_type: "application/json")
       end
 
-      def render_3d(id, callback:, width:, height:, section:, view:, filetype:)
+      def render_3d(id, callback:, width:, height:, section:, view:, combine:)
         raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
-        raise ArgumentError, "Unsupported filetype: #{filetype}" unless %w{ png pdf jpg }.include?(filetype)
 
         json = {
           callback: callback,
@@ -60,7 +59,7 @@ module Floorplanner
           height: height,
           section: section,
           view: view,
-          filetype: filetype
+          combine: combine
         }.to_json
 
         client.post("projects/#{id}/render3d.json", json, content_type: "application/json")

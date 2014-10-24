@@ -129,14 +129,14 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#render_2d" do
     it "posts a JSON request to the project render2d endpoint" do
-      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, filetype: "pdf")
+      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true)
       expect(client.post_path).to eq("projects/123/render2d.json")
 
       json = JSON.parse(client.post_json)
       expect(json["callback"]).to eq("http://example.com")
       expect(json["width"]).to be(500)
       expect(json["height"]).to be(400)
-      expect(json["filetype"]).to eq("pdf")
+      expect(json["combine"]).to eq(true)
     end
   end
 
@@ -148,7 +148,7 @@ describe Floorplanner::Resources::ProjectsResource do
         height: 400,
         section: 1500,
         view: "top",
-        filetype: "jpg"
+        combine: false
       }
     }
 
@@ -164,26 +164,6 @@ describe Floorplanner::Resources::ProjectsResource do
       end
     end
 
-    it "raises an error if filetype contains an unsupported option" do
-      expect { 
-        subject.render_3d(123,
-          callback: "http://example.com",
-          width: 500,
-          height: 400,
-          section: 1500,
-          view: "sw",
-          filetype: "gif"
-        )
-      }.to raise_error("Unsupported filetype: gif")
-    end
-
-    it "supports the filetypes [pdf jpg png]" do
-      %w{ pdf jpg png }.each do |filetype|
-        opts[:filetype] = filetype
-        expect { subject.render_3d(123, **opts) }.not_to raise_error
-      end
-    end
-
     it "posts a JSON request to the project render3d endpoint" do
       subject.render_3d(123,
         callback: "http://example.com",
@@ -191,7 +171,7 @@ describe Floorplanner::Resources::ProjectsResource do
         height: 400,
         section: 1500,
         view: "top",
-        filetype: "jpg"
+        combine: false
       )
 
       expect(client.post_path).to eq("projects/123/render3d.json")
@@ -202,7 +182,7 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(json["height"]).to be(400)
       expect(json["section"]).to be(1500)
       expect(json["view"]).to eq("top")
-      expect(json["filetype"]).to eq("jpg")
+      expect(json["combine"]).to eq(false)
     end
   end
 
