@@ -8,8 +8,12 @@ module Floorplanner
 
     module ComplexArrayElement
       def self.to_xml(value)
-        element_name = "#{value.first.element_name}!"
-        { :@type => "array", :content! => { element_name.to_sym => value.map { |v| v.to_unrooted_xml_hash[:content!] } } }
+        { :@type => "array" }.tap do |hash|
+          if value.any?
+            element_name = "#{value.first.element_name}!"
+            hash[:content!] = { element_name.to_sym => value.map { |v| v.to_unrooted_xml_hash[:content!] } }
+          end
+        end
       end
     end
 
