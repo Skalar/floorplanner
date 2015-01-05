@@ -3,7 +3,7 @@ module Floorplanner
     class ProjectsResource < Resource
       def all(user_id: nil)
         path = user_id.nil? ? "projects.xml" : "users/#{user_id}/projects.xml"
-        res = client.get("projects.xml")
+        res = client.get(path)
         ::Floorplanner::Models::ProjectsDocument.from_xml(res.body).projects
       end
 
@@ -12,8 +12,9 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
-      def create(project)
-        res = client.post("projects.xml", project.to_xml)
+      def create(project, user_id: nil)
+        url = user_id.nil? ? "projects.xml" : "users/#{user_id.to_i}/projects.xml"
+        res = client.post(url, project.to_xml)
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
