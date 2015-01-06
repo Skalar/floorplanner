@@ -22,13 +22,16 @@ module Floorplanner
     # FLOORPLANNER_API_KEY
     # FLOORPLANNER_PASSWORD
     # FLOORPLANNER_SUBDOMAIN
+    # FLOORPLANNER_PROTOCOL
     #
-    # The instance will use https.
+    # The instance will use https if
+    # FLOORPLANNER_PROTOCOL is not set.
     def self.from_env
       new(
         api_key: ENV["FLOORPLANNER_API_KEY"],
         password: ENV["FLOORPLANNER_PASSWORD"],
-        subdomain: ENV["FLOORPLANNER_SUBDOMAIN"]
+        subdomain: ENV["FLOORPLANNER_SUBDOMAIN"],
+        protocol: ENV.fetch("FLOORPLANNER_PROTOCOL", "https")
       )
     end
 
