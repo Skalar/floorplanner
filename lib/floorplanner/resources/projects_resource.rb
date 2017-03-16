@@ -46,11 +46,12 @@ module Floorplanner
         client.post("projects/#{id}/render", export.to_xml)
       end
 
-      def render_2d(id, callback:, width:, height:, combine:, fmt: 'jpg')
+      def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: 'jpg')
         json = {
           callback: callback,
           width: width,
           height: height,
+          orientation: orientation,
           combine: combine,
           fmt: fmt,
           type: '2d'
@@ -59,13 +60,14 @@ module Floorplanner
         client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
       end
 
-      def render_3d(id, callback:, width:, height:, section:, view:, combine:, fmt: 'jpg')
+      def render_3d(id, callback:, width:, height:, orientation:, section:, view:, combine:, fmt: 'jpg')
         raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
 
         json = {
           callback: callback,
           width: width,
           height: height,
+          orientation: orientation,
           section: section,
           view: view,
           combine: combine,
