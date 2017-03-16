@@ -69,7 +69,8 @@ module Floorplanner
           section: section,
           view: view,
           combine: combine,
-          fmt: fmt
+          fmt: fmt,
+          type: '3d'
         }.to_json
 
         client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
