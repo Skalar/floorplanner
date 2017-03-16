@@ -46,12 +46,20 @@ module Floorplanner
         client.post("projects/#{id}/render", export.to_xml)
       end
 
-      def render_2d(id, callback:, width:, height:, combine:)
-        json = { callback: callback, width: width, height: height, combine: combine }.to_json
-        client.post("projects/#{id}/render2d.json", json, content_type: "application/json")
+      def render_2d(id, callback:, width:, height:, combine:, fmt: 'jpg')
+        json = {
+          callback: callback,
+          width: width,
+          height: height,
+          combine: combine,
+          fmt: fmt,
+          type: '2d'
+        }.to_json
+
+        client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
       end
 
-      def render_3d(id, callback:, width:, height:, section:, view:, combine:)
+      def render_3d(id, callback:, width:, height:, section:, view:, combine:, fmt: 'jpg')
         raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
 
         json = {
@@ -60,10 +68,11 @@ module Floorplanner
           height: height,
           section: section,
           view: view,
-          combine: combine
+          combine: combine,
+          fmt: fmt
         }.to_json
 
-        client.post("projects/#{id}/render3d.json", json, content_type: "application/json")
+        client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
       end
 
       def publish(id, project_configuration)
