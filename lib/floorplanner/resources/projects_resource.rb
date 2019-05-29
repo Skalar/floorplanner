@@ -52,7 +52,7 @@ module Floorplanner
           width: width,
           height: height,
           orientation: orientation,
-          combine: combine,
+          'paper[combine]': combine,
           fmt: fmt,
           type: '2d'
         }.to_json
@@ -70,7 +70,7 @@ module Floorplanner
           orientation: orientation,
           section: section,
           view: view,
-          combine: combine,
+          'paper[combine]': combine,
           fmt: fmt,
           type: '3d'
         }.to_json
