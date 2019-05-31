@@ -1,15 +1,14 @@
 module Floorplanner
   module Resources
     class ProjectsResource < Resource
-      def all(user_id: nil)
-        path = user_id.nil? ? "projects.xml" : "users/#{user_id}/projects.xml"
-        res = client.get(path)
-        ::Floorplanner::Models::ProjectsDocument.from_xml(res.body).projects
+      def all
+        res = client.get("api/v2/projects.json")
+        ::Floorplanner::Models::ProjectsDocument.from_json(res.body, :projects).projects
       end
 
       def find(id)
-        res = client.get("projects/#{id}.xml")
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+        res = client.get("api/v2/projects/#{id}.json")
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def create(project, user_id: nil)
@@ -18,32 +17,13 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
       end
 
-      def overwrite(id, fml_xml:)
-        res = client.put("projects/#{id}.xml", fml_xml)
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
-      end
-
       def delete(id)
-        client.delete("projects/#{id}.xml")
-      end
-
-      def create_floor(id, floor)
-        client.post("projects/#{id}/floors.xml", floor.to_xml)
-      end
-
-      def add_collaborator(id, email:)
-        xml = Gyoku.xml({email: email})
-        client.post("projects/#{id}/collaborate.xml", xml)
+        client.delete("api/v2/projects/#{id}.json")
       end
 
       def export(id)
-        res = client.get("projects/#{id}/export.xml")
+        res = client.get("api/v2/projects/#{id}.fml")
         res.body
-      end
-
-      def render(id, export)
-        raise export.errors.first if export.errors.any?
-        client.post("projects/#{id}/render", export.to_xml)
       end
 
       def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: 'jpg')
@@ -51,28 +31,33 @@ module Floorplanner
           callback: callback,
           width: width,
           height: height,
-          orientation: orientation,
-          'paper[combine]': combine,
-          fmt: fmt,
-          type: '2d'
+          fmt: [fmt],
+          type: '2d',
+          paper: {
+            orientation: orientation,
+            combine: combine
+          }
         }.to_json
 
         client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
       end
 
-      def render_3d(id, callback:, width:, height:, orientation:, section:, view:, combine:, fmt: 'jpg')
+      def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: 'jpg')
         raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
 
         json = {
           callback: callback,
           width: width,
           height: height,
-          orientation: orientation,
-          section: section,
-          view: view,
-          'paper[combine]': combine,
-          fmt: fmt,
-          type: '3d'
+          fmt: [fmt],
+          type: '3d',
+          views: [
+            {type: view}
+          ],
+          paper: {
+            orientation: orientation,
+            combine: combine
+          }
         }.to_json
 
         client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")

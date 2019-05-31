@@ -6,12 +6,12 @@ module Floorplanner
       element :description
       element :public
       element :external_identifier
-      element :created_at
-      element :updated_at
+      element :created_at, Time
+      element :updated_at, Time
       element :project_url
       element :user_id
-      element :location
       complex :floors, Array[Floor]
+      element :floor_count
     end
 
     class ProjectDocument < Model

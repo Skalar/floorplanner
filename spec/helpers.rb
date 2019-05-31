@@ -1,6 +1,6 @@
 module Helpers
-  def read_xml(name)
-    File.read(File.join("./spec/fixtures", "#{name}.xml")) rescue ""
+  def read_json(name)
+    File.read(File.join("./spec/fixtures", "#{name}.json")) rescue ""
   end
 
   def remove_whitespace(str)

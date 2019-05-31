@@ -1,20 +1,9 @@
 module Floorplanner
   module Models
     module ComplexElement
-      def self.to_xml(value)
-        value.to_unrooted_xml_hash
-      end
     end
 
     module ComplexArrayElement
-      def self.to_xml(value)
-        { :@type => "array" }.tap do |hash|
-          if value.any?
-            element_name = "#{value.first.element_name}!"
-            hash[:content!] = { element_name.to_sym => value.map { |v| v.to_unrooted_xml_hash[:content!] } }
-          end
-        end
-      end
     end
 
     class Model < Hashie::Trash
@@ -25,11 +14,6 @@ module Floorplanner
         Time => lambda { |v| Time.parse(v) },
         Float => lambda { |v| v.to_f }
       }
-
-      # These properties are declared for
-      # compatability with Gyoku
-      property :attributes!
-      property :order!
 
       def self.complex_elements
         @complex_elements ||= {}
@@ -56,7 +40,7 @@ module Floorplanner
 
         coerce_key name_sym, type
         property name_sym
-      end 
+      end
 
       def self.from_xml(xml_str)
         parser = Nori.new
@@ -64,41 +48,16 @@ module Floorplanner
         from_hash(hash)
       end
 
+      def self.from_json(json_str, key)
+        hash = JSON.parse(json_str)
+        from_hash({key => hash})
+      end
+
       def self.from_hash(hash)
         _enable_symbolize_keys!(hash)
         hash.symbolize_keys!
+        puts hash.inspect
         new(hash)
-      end
-
-      def to_xml
-        Gyoku.xml(element_name => to_unrooted_xml_hash)
-      end
-
-      def to_unrooted_xml_hash
-        xml_hash = { :content! => {} }
-
-        if self.class.namespace
-          xml_hash[:@xmlns] = self.class.namespace
-        end
-
-        each do |key, value|
-          element_name_for_key = key.to_s.gsub("_", "-")
-
-          complex = self.class.complex_elements[key]
-
-          if complex
-            xml_hash[:content!][element_name_for_key.concat("!").to_sym] = complex.to_xml(value)
-          else
-            xml_hash[:content!][element_name_for_key.to_sym] = value
-          end
-        end
-
-        xml_hash
-      end
-
-      # element_name("Foo::Bar::MyCoolElement") #=> :my-cool-element
-      def element_name
-        self.class.name.split("::").last.split(/(?=[A-Z])/).join("-").downcase.to_sym
       end
 
       private

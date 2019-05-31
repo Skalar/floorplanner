@@ -8,7 +8,7 @@ describe Floorplanner::Resources::UsersResource do
     end
 
     def get(path)
-      if path = "users/#{@user_id}/token"
+      if path == "api/v2/users/#{@user_id}/token"
         HTTPI::Response.new(200, {}, @token)
       end
     end
