@@ -11,10 +11,9 @@ module Floorplanner
         ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
-      def create(project, user_id: nil)
-        url = user_id.nil? ? "projects.xml" : "users/#{user_id.to_i}/projects.xml"
-        res = client.post(url, project.to_xml)
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+      def create(project)
+        res = client.post("api/v2/projects.json", project.to_json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def delete(id)

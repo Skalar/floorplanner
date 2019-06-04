@@ -47,26 +47,30 @@ describe Floorplanner::Resources::ProjectsResource do
   end
 
   describe "#create" do
-    it "posts a project XML to Floorplanner" do
-      f = Floorplanner::Models::Floor.new
-      f.name = "Ground floor"
-      f.drawing_url = "http://example.com/some-image.jpg"
-
+    it "posts a project JSON to Floorplanner" do
       p = Floorplanner::Models::Project.new
       p.name = "Portveien 2"
-      p.description = "A nice little house with 2 floors"
+      p.description = "A nice little house with 1 floors"
       p.public = false
       p.external_identifier = "ID123"
-      p.floors = [f]
+      p.floors = [
+        {
+          name: "Ground floor",
+          drawing: {
+            remote_filename_url: "http://example.com/some-image.jpg"
+          }
+        }
+      ]
 
+      client.path_body["api/v2/projects.json"] = read_json("create_response")
       subject.create(p)
 
-      expect(client.post_xml).to eq(remove_whitespace(read_xml("create")))
+      expect(client.post_data).to eq(remove_whitespace(read_json("create")))
     end
 
     it "returns an instance of Floorplanner::Models::Project for the created project" do
-      client.path_body["projects.xml"] = read_xml("create_response")
-      doc = Floorplanner::Models::ProjectDocument.from_xml(read_xml("create"))
+      client.path_body["api/v2/projects.json"] = read_json("create_response")
+      doc = Floorplanner::Models::ProjectDocument.from_json(read_json("create"), :project)
       created = subject.create(doc.project)
       expect(created.class).to be(Floorplanner::Models::Project)
       expect(created.id).to be(29231859)

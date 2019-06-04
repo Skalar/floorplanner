@@ -1,0 +1,30 @@
+{
+  "id": 29231859,
+  "user_id": 26011672,
+  "public": false,
+  "name": "Portveien 2",
+  "description": "A nice little house with 1 floor",
+  "project_url": "jz4sdc",
+  "created_at": "2014-08-04T01:56:50.000Z",
+  "updated_at": "2014-08-04T01:56:50.000Z",
+  "enable_autosave": false,
+  "external_identifier": null,
+  "exported_at": null,
+  "level_id": 2,
+  "status": "published",
+  "thumbnail": null,
+  "thumbnail_3d": null,
+  "floors": [
+    {
+      "id": 35433070,
+      "project_id": 29231859,
+      "name": "Ground floor",
+      "level": 0,
+      "created_at": "2014-08-12T07:31:19.000Z",
+      "updated_at": "2014-08-12T07:31:19.000Z",
+      "height": 2.8
+    }
+  ],
+  "floor_count": 1,
+  "design_count": 1
+}

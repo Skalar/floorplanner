@@ -56,8 +56,34 @@ module Floorplanner
       def self.from_hash(hash)
         _enable_symbolize_keys!(hash)
         hash.symbolize_keys!
-        puts hash.inspect
         new(hash)
+      end
+
+      def to_json
+        {element_name => to_unrooted_hash}.to_json
+      end
+
+      def to_unrooted_hash
+        xml_hash = {}
+
+        each do |key, value|
+          complex = self.class.complex_elements[key]
+
+          if complex == Floorplanner::Models::ComplexArrayElement
+            xml_hash[key.to_s.concat("_attributes").to_sym] = value.map { |e| e.to_unrooted_hash }
+          elsif complex
+            xml_hash[key.to_s.concat("_attributes").to_sym] = value.to_unrooted_hash
+          else
+            xml_hash[key] = value
+          end
+        end
+
+        xml_hash
+      end
+
+      # element_name("Foo::Bar::MyCoolElement") #=> :my-cool-element
+      def element_name
+        self.class.name.split("::").last.split(/(?=[A-Z])/).join("-").downcase.to_sym
       end
 
       private

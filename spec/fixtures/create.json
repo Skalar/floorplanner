@@ -1,0 +1,17 @@
+{
+  "project":{
+    "name":"Portveien 2",
+    "description":"A nice little house with 1 floors",
+    "public":false,
+    "external_identifier":"ID123",
+    "floors_attributes":[
+      {
+        "name":"Ground floor",
+        "drawing_attributes":{
+          "remote_filename_url":"http://example.com/some-image.jpg"
+        }
+      }
+    ]
+  }
+}
+
