@@ -70,7 +70,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
     it "returns an instance of Floorplanner::Models::Project for the created project" do
       client.path_body["projects.json"] = read_json("create_response")
-      doc = Floorplanner::Models::ProjectDocument.from_json(read_json("create"), :project)
+      doc = Floorplanner::Models::ProjectDocument.from_json(read_json("create"))
       created = subject.create(doc.project)
       expect(created.class).to be(Floorplanner::Models::Project)
       expect(created.id).to be(29231859)

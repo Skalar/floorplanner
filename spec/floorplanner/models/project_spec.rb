@@ -53,7 +53,7 @@ describe Floorplanner::Models::Project do
 
   describe "#from_json" do
     it "returns an instance of Project" do
-      project = ::Floorplanner::Models::ProjectDocument.from_json(read_json("find"), :project).project
+      project = ::Floorplanner::Models::ProjectDocument.from_json(read_json("find")).project
 
       expect(project.id).to be(29261344)
       expect(project.name).to eq("Skalar test")
@@ -80,6 +80,10 @@ describe Floorplanner::Models::Project do
       floor = project.floors.first
       expect(floor.id).to be(35485287)
       expect(floor.name).to eq("Ground floor")
+
+      design = floor.designs.first
+      expect(design.id).to be(647805585)
+      expect(design.name).to eq("untitled")
     end
   end
 end

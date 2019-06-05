@@ -6,7 +6,6 @@ require "json"
 
 require "httpi"
 require "nori"
-require "gyoku"
 require "hashie"
 
 require "floorplanner/models/model"

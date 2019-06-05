@@ -3,17 +3,17 @@ module Floorplanner
     class ProjectsResource < Resource
       def all
         res = client.get("projects.json")
-        ::Floorplanner::Models::ProjectsDocument.from_json(res.body, :projects).projects
+        ::Floorplanner::Models::ProjectsDocument.from_json(res.body).projects
       end
 
       def find(id)
         res = client.get("projects/#{id}.json")
-        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       def create(project)
         res = client.post("projects.json", project.to_json)
-        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       def delete(id)
@@ -65,13 +65,13 @@ module Floorplanner
       def publish(id)
         json = {public: true}.to_json
         res = client.put("projects/#{id}.json", json)
-        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       def unpublish(id)
         json = {public: false}.to_json
         res = client.put("projects/#{id}.json", json)
-        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       private

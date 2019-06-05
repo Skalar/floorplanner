@@ -16,10 +16,18 @@ module Floorplanner
 
     class ProjectDocument < Model
       complex :project, Project
+
+      def self.from_json(json_str)
+        super json_str, :project
+      end
     end
 
     class ProjectsDocument < Model
       complex :projects, Array[Project]
+
+      def self.from_json(json_str)
+        super(json_str, :projects)
+      end
     end
   end
 end
