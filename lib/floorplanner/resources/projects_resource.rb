@@ -62,15 +62,16 @@ module Floorplanner
         client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
       end
 
-      def publish(id, project_configuration)
-        raise project_configuration.errors.first if project_configuration.errors.any?
-        res = client.post("projects/#{id}/configuration.xml", project_configuration.to_xml)
-        ::Floorplanner::Models::PublishConfigurationDocument.from_xml(res.body).publish_configuration
+      def publish(id)
+        json = {public: true}.to_json
+        res = client.put("api/v2/projects/#{id}.json", json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def unpublish(id)
-        res = client.delete("projects/#{id}/configuration.xml")
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+        json = {public: false}.to_json
+        res = client.put("api/v2/projects/#{id}.json", json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       private

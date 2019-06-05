@@ -87,7 +87,7 @@ describe Floorplanner::Resources::ProjectsResource do
   describe "#export" do
     it "returns the FML (xml) returned from the server" do
       xml = "<project><test>foobar</test></project>"
-      client.path_body["projects/123/export.xml"] = xml
+      client.path_body["api/v2/projects/123.fml"] = xml
       result = subject.export(123)
       expect(result).to eq(xml)
     end
@@ -113,7 +113,6 @@ describe Floorplanner::Resources::ProjectsResource do
         callback: "http://example.com",
         width: 500,
         height: 400,
-        section: 1500,
         view: "top",
         combine: false,
         orientation: "landscape"
@@ -137,7 +136,6 @@ describe Floorplanner::Resources::ProjectsResource do
         callback: "http://example.com",
         width: 500,
         height: 400,
-        section: 1500,
         view: "top",
         combine: false,
         orientation: "landscape"
@@ -150,47 +148,40 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(json["callback"]).to eq("http://example.com")
       expect(json["width"]).to be(500)
       expect(json["height"]).to be(400)
-      expect(json["section"]).to be(1500)
-      expect(json["view"]).to eq("top")
+      expect(json["views"].first["type"]).to eq("top")
       expect(json["paper"]["combine"]).to eq(false)
     end
   end
 
   describe "#publish" do
-    it "raises the first returned error from the publish configuration as an error" do
-      config = Floorplanner::Models::PublishConfiguration.new(path: nil)
-      expect { subject.publish(123, config) }.to raise_error(config.errors.first)
+    it "posts JSON setting public to true to Floorplanner" do
+      client.path_body["api/v2/projects/123.json"] = read_json("update_response")
+      subject.publish(123)
+      expect(client.put_path).to eq("api/v2/projects/123.json")
+      expect(client.put_data).to eq '{"public":true}'
     end
 
-    it "posts an XML request to the project publish configuration endpoint on the Floorplanner server" do
-      config = Floorplanner::Models::PublishConfiguration.new(path: "foobar")
-      subject.publish(123, config)
-      expect(client.post_path).to eq("projects/123/configuration.xml")
-      expect(client.post_xml).to eq(config.to_xml)
-    end
-
-    it "returns the publish configuration from Floorplanner" do
-      xml = "<publish-configuration><path>path from fp</path></project-configuration>"
-      client.path_body["projects/123/configuration.xml"] = xml
-
-      config = Floorplanner::Models::PublishConfiguration.new(path: "foobar")
-      result = subject.publish(123, config)
-
-      expect(result.path).to eq("path from fp")
+    it "returns an instance of Floorplanner::Models::Project for the updated project" do
+      client.path_body["api/v2/projects/7742222.json"] = read_json("update_response")
+      created = subject.publish(7742222)
+      expect(created.class).to be(Floorplanner::Models::Project)
+      expect(created.id).to be(7742222)
     end
   end
 
   describe "#unpublish" do
-    it "deletes the publish configuration" do
+    it "posts JSON setting public to false to Floorplanner" do
+      client.path_body["api/v2/projects/123.json"] = read_json("update_response")
       subject.unpublish(123)
-      expect(client.delete_path).to eq("projects/123/configuration.xml")
+      expect(client.put_path).to eq("api/v2/projects/123.json")
+      expect(client.put_data).to eq '{"public":false}'
     end
 
-    it "returns the project returned from Floorplanner" do
-      xml = "<project><id>123</id></project>"
-      client.path_body["projects/123/configuration.xml"] = xml
-      res = subject.unpublish(123)
-      expect(res.id.to_i).to be(123)
+    it "returns an instance of Floorplanner::Models::Project for the updated project" do
+      client.path_body["api/v2/projects/7742222.json"] = read_json("update_response")
+      created = subject.unpublish(7742222)
+      expect(created.class).to be(Floorplanner::Models::Project)
+      expect(created.id).to be(7742222)
     end
   end
 
@@ -198,6 +189,8 @@ describe Floorplanner::Resources::ProjectsResource do
     attr_reader :path_body
     attr_reader :post_data
     attr_reader :post_path
+    attr_reader :put_data
+    attr_reader :put_path
     attr_reader :delete_path
 
     def initialize
@@ -212,6 +205,12 @@ describe Floorplanner::Resources::ProjectsResource do
       @post_data = data
       @post_path = path
       response(201, path)
+    end
+
+    def put(path, data, content_type = "application/json")
+      @put_data = data
+      @put_path = path
+      response(200, path)
     end
 
     def delete(path)
