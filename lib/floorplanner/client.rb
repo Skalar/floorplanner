@@ -43,7 +43,7 @@ module Floorplanner
       check_result(res)
     end
 
-    def post(resource_path, body, content_type: "text/xml")
+    def post(resource_path, body, content_type: "application/json")
       logger.debug("POST to #{resource_path} as #{content_type}:\n\n#{body}")
 
       req = build_request(resource_path)
@@ -53,7 +53,7 @@ module Floorplanner
       check_result(res)
     end
 
-    def put(resource_path, body, content_type: "text/xml")
+    def put(resource_path, body, content_type: "application/json")
       logger.debug("PUT to #{resource_path} as #{content_type}:\n\n#{body}")
 
       req = build_request(resource_path)

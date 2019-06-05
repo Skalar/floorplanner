@@ -38,7 +38,7 @@ module Floorplanner
           }
         }.to_json
 
-        client.post("projects/#{id}/export.json", json, content_type: "application/json")
+        client.post("projects/#{id}/export.json", json)
       end
 
       def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: 'jpg')
@@ -59,7 +59,7 @@ module Floorplanner
           }
         }.to_json
 
-        client.post("projects/#{id}/export.json", json, content_type: "application/json")
+        client.post("projects/#{id}/export.json", json)
       end
 
       def publish(id)
