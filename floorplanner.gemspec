@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "httpi", "~> 2.2.5"
-  spec.add_dependency "nokogiri", "~> 1.6.1"
+  spec.add_dependency "nokogiri", "~> 1.8.5"
   spec.add_dependency "nori", "~> 2.3.0"
   spec.add_dependency "gyoku", "~> 1.1.1"
   spec.add_dependency "hashie"
