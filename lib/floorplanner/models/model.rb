@@ -11,7 +11,15 @@ module Floorplanner
       include Hashie::Extensions::IgnoreUndeclared
 
       ELEMENT_TRANSFORMATIONS = {
-        Time => lambda { |v| Time.parse(v) },
+        Time => lambda { |v|
+          if v.class == DateTime
+            # When values like "2019-06-03T09:34:59+0000" are provided they automatically are set as
+            # DateTime objects by the XML parser, therefore we convert them to Time objects using
+            # the technique documented at: https://stackoverflow.com/a/3513247
+            return Time.new(v.year, v.month, v.day, v.hour, v.min, v.sec, v.zone)
+          end
+          Time.parse(v)
+        },
         Float => lambda { |v| v.to_f }
       }
 

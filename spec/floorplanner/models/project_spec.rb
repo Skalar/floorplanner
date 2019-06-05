@@ -50,4 +50,36 @@ describe Floorplanner::Models::Project do
       )
     end
   end
+
+  describe "#from_json" do
+    it "returns an instance of Project" do
+      project = ::Floorplanner::Models::ProjectDocument.from_json(read_json("find"), :project).project
+
+      expect(project.id).to be(29261344)
+      expect(project.name).to eq("Skalar test")
+      expect(project.created_at.class).to eq Time
+      expect(project.updated_at.class).to eq Time
+      expect(project.floors.length).to be(1)
+
+      floor = project.floors.first
+      expect(floor.id).to be(35485287)
+      expect(floor.name).to eq("Ground floor")
+    end
+  end
+
+  describe "#from_xml" do
+    it "returns an instance of Project" do
+      project = ::Floorplanner::Models::ProjectDocument.from_xml(read_xml("exported")).project
+
+      expect(project.id).to be(29261344)
+      expect(project.name).to eq("Skalar test")
+      expect(project.created_at.class).to eq Time
+      expect(project.updated_at.class).to eq Time
+      expect(project.floors.length).to be(1)
+
+      floor = project.floors.first
+      expect(floor.id).to be(35485287)
+      expect(floor.name).to eq("Ground floor")
+    end
+  end
 end
