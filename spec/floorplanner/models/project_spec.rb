@@ -85,5 +85,23 @@ describe Floorplanner::Models::Project do
       expect(design.id).to be(647805585)
       expect(design.name).to eq("untitled")
     end
+
+    it "returns an instance of Project with XML exported from API version 1" do
+      project = ::Floorplanner::Models::ProjectDocument.from_xml(read_xml("exported_legacy")).project
+
+      expect(project.id).to be(63722943)
+      expect(project.name).to eq("An old project")
+      expect(project.created_at.class).to eq Time
+      expect(project.updated_at.class).to eq Time
+      expect(project.floors.length).to be(1)
+
+      floor = project.floors.first
+      expect(floor.id).to be(115050306)
+      expect(floor.name).to eq("Floor 0")
+
+      design = floor.designs.first
+      expect(design.id).to be(121351764)
+      expect(design.name).to eq("Floor 0")
+    end
   end
 end

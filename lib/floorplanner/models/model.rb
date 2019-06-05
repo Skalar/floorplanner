@@ -12,6 +12,7 @@ module Floorplanner
 
       ELEMENT_TRANSFORMATIONS = {
         Time => lambda { |v|
+          return v if v.class == Time
           if v.class == DateTime
             # When values like "2019-06-03T09:34:59+0000" are provided they automatically are set as
             # DateTime objects by the XML parser, therefore we convert them to Time objects using
