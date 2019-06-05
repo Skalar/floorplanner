@@ -7,7 +7,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#find" do
     it "should return a project with data from the response JSON" do
-      client.path_body["api/v2/projects/29261344.json"] = read_json("find")
+      client.path_body["projects/29261344.json"] = read_json("find")
 
       project = subject.find(29261344)
 
@@ -34,7 +34,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#all" do
     it "returns an array of projects based on the response JSON" do
-      client.path_body["api/v2/projects.json"] = read_json("all")
+      client.path_body["projects.json"] = read_json("all")
 
       projects = subject.all
 
@@ -62,14 +62,14 @@ describe Floorplanner::Resources::ProjectsResource do
         }
       ]
 
-      client.path_body["api/v2/projects.json"] = read_json("create_response")
+      client.path_body["projects.json"] = read_json("create_response")
       subject.create(p)
 
       expect(client.post_data).to eq(remove_whitespace(read_json("create")))
     end
 
     it "returns an instance of Floorplanner::Models::Project for the created project" do
-      client.path_body["api/v2/projects.json"] = read_json("create_response")
+      client.path_body["projects.json"] = read_json("create_response")
       doc = Floorplanner::Models::ProjectDocument.from_json(read_json("create"), :project)
       created = subject.create(doc.project)
       expect(created.class).to be(Floorplanner::Models::Project)
@@ -80,14 +80,14 @@ describe Floorplanner::Resources::ProjectsResource do
   describe "#delete" do
     it "deletes the project with the given id from Floorplanner" do
       subject.delete(123)
-      expect(client.delete_path).to eq("api/v2/projects/123.json")
+      expect(client.delete_path).to eq("projects/123.json")
     end
   end
 
   describe "#export" do
     it "returns the FML (xml) returned from the server" do
       xml = "<project><test>foobar</test></project>"
-      client.path_body["api/v2/projects/123.fml"] = xml
+      client.path_body["projects/123.fml"] = xml
       result = subject.export(123)
       expect(result).to eq(xml)
     end
@@ -96,7 +96,7 @@ describe Floorplanner::Resources::ProjectsResource do
   describe "#render_2d" do
     it "posts a JSON request to the project render2d endpoint" do
       subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true, orientation: "landscape")
-      expect(client.post_path).to eq("api/v2/projects/123/export.json")
+      expect(client.post_path).to eq("projects/123/export.json")
 
       json = JSON.parse(client.post_data)
       expect(json["type"]).to eq("2d")
@@ -141,7 +141,7 @@ describe Floorplanner::Resources::ProjectsResource do
         orientation: "landscape"
       )
 
-      expect(client.post_path).to eq("api/v2/projects/123/export.json")
+      expect(client.post_path).to eq("projects/123/export.json")
 
       json = JSON.parse(client.post_data)
       expect(json["type"]).to eq("3d")
@@ -155,14 +155,14 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#publish" do
     it "posts JSON setting public to true to Floorplanner" do
-      client.path_body["api/v2/projects/123.json"] = read_json("update_response")
+      client.path_body["projects/123.json"] = read_json("update_response")
       subject.publish(123)
-      expect(client.put_path).to eq("api/v2/projects/123.json")
+      expect(client.put_path).to eq("projects/123.json")
       expect(client.put_data).to eq '{"public":true}'
     end
 
     it "returns an instance of Floorplanner::Models::Project for the updated project" do
-      client.path_body["api/v2/projects/7742222.json"] = read_json("update_response")
+      client.path_body["projects/7742222.json"] = read_json("update_response")
       created = subject.publish(7742222)
       expect(created.class).to be(Floorplanner::Models::Project)
       expect(created.id).to be(7742222)
@@ -171,14 +171,14 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#unpublish" do
     it "posts JSON setting public to false to Floorplanner" do
-      client.path_body["api/v2/projects/123.json"] = read_json("update_response")
+      client.path_body["projects/123.json"] = read_json("update_response")
       subject.unpublish(123)
-      expect(client.put_path).to eq("api/v2/projects/123.json")
+      expect(client.put_path).to eq("projects/123.json")
       expect(client.put_data).to eq '{"public":false}'
     end
 
     it "returns an instance of Floorplanner::Models::Project for the updated project" do
-      client.path_body["api/v2/projects/7742222.json"] = read_json("update_response")
+      client.path_body["projects/7742222.json"] = read_json("update_response")
       created = subject.unpublish(7742222)
       expect(created.class).to be(Floorplanner::Models::Project)
       expect(created.id).to be(7742222)

@@ -1,10 +1,11 @@
 module Floorplanner
   class Client
-    def initialize(api_key:, password:, subdomain:, protocol: "https")
+    def initialize(api_key:, password:, subdomain:, protocol: "https", api_path: "/api/v2")
       @api_key = api_key
       @password = password
       @subdomain = subdomain
       @protocol = protocol
+      @api_path = api_path
     end
 
     def self.logger
@@ -93,7 +94,7 @@ module Floorplanner
     end
 
     def build_url(resource_path)
-      "#{@protocol}://#{@subdomain}.floorplanner.com/#{resource_path}"
+      "#{@protocol}://#{@subdomain}.floorplanner.com#{@api_path}/#{resource_path}"
     end
 
     def logger

@@ -2,26 +2,26 @@ module Floorplanner
   module Resources
     class ProjectsResource < Resource
       def all
-        res = client.get("api/v2/projects.json")
+        res = client.get("projects.json")
         ::Floorplanner::Models::ProjectsDocument.from_json(res.body, :projects).projects
       end
 
       def find(id)
-        res = client.get("api/v2/projects/#{id}.json")
+        res = client.get("projects/#{id}.json")
         ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def create(project)
-        res = client.post("api/v2/projects.json", project.to_json)
+        res = client.post("projects.json", project.to_json)
         ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def delete(id)
-        client.delete("api/v2/projects/#{id}.json")
+        client.delete("projects/#{id}.json")
       end
 
       def export(id)
-        res = client.get("api/v2/projects/#{id}.fml")
+        res = client.get("projects/#{id}.fml")
         res.body
       end
 
@@ -38,7 +38,7 @@ module Floorplanner
           }
         }.to_json
 
-        client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
+        client.post("projects/#{id}/export.json", json, content_type: "application/json")
       end
 
       def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: 'jpg')
@@ -59,18 +59,18 @@ module Floorplanner
           }
         }.to_json
 
-        client.post("api/v2/projects/#{id}/export.json", json, content_type: "application/json")
+        client.post("projects/#{id}/export.json", json, content_type: "application/json")
       end
 
       def publish(id)
         json = {public: true}.to_json
-        res = client.put("api/v2/projects/#{id}.json", json)
+        res = client.put("projects/#{id}.json", json)
         ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
       def unpublish(id)
         json = {public: false}.to_json
-        res = client.put("api/v2/projects/#{id}.json", json)
+        res = client.put("projects/#{id}.json", json)
         ::Floorplanner::Models::ProjectDocument.from_json(res.body, :project).project
       end
 
