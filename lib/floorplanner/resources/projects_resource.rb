@@ -42,7 +42,9 @@ module Floorplanner
       end
 
       def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: 'jpg')
-        raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
+        unless %w{ se sw ne nw top tilted photo panorama stereo }.include?(view)
+          raise ArgumentError, "Unsupported view type: #{view}"
+        end
 
         json = {
           callback: callback,
