@@ -25,12 +25,12 @@ module Floorplanner
         res.body
       end
 
-      def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: 'jpg')
+      def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: ['jpg'])
         json = {
           callback: callback,
           width: width,
           height: height,
-          fmt: [fmt],
+          fmt: fmt,
           type: '2d',
           paper: {
             orientation: orientation,
@@ -41,7 +41,7 @@ module Floorplanner
         client.post("projects/#{id}/export.json", json)
       end
 
-      def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: 'jpg')
+      def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: ['jpg'])
         unless %w{ se sw ne nw top tilted photo panorama stereo }.include?(view)
           raise ArgumentError, "Unsupported view type: #{view}"
         end
@@ -50,7 +50,7 @@ module Floorplanner
           callback: callback,
           width: width,
           height: height,
-          fmt: [fmt],
+          fmt: fmt,
           type: '3d',
           views: [
             {type: view}
