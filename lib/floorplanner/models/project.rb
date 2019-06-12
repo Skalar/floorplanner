@@ -10,6 +10,7 @@ module Floorplanner
       element :updated_at, Time
       element :project_url
       element :user_id
+      complex :project_template, Template
       complex :floors, Array[Floor]
       element :floor_count
     end

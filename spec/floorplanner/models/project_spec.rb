@@ -6,6 +6,7 @@ describe Floorplanner::Models::Project do
       project = Floorplanner::Models::Project.new
       project.name = "Test Floorplan"
       project.public = false
+      project.project_template = {template_id: 43}
       project.floors = [
         {
           name: "Floor 1",
@@ -28,6 +29,9 @@ describe Floorplanner::Models::Project do
           "project":{
             "name":"Test Floorplan",
             "public":false,
+            "project_template_attributes":{
+              "template_id":43
+            },
             "floors_attributes":[
               {
                 "name":"Floor 1",

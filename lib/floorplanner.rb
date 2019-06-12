@@ -12,6 +12,7 @@ require "floorplanner/models/model"
 require "floorplanner/models/design"
 require "floorplanner/models/drawing"
 require "floorplanner/models/floor"
+require "floorplanner/models/template"
 require "floorplanner/models/project"
 
 require "floorplanner/client"
