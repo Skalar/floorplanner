@@ -1,7 +1,7 @@
 module Floorplanner
   module Models
     class Project < Model
-      element :id
+      element :id, Integer
       element :name
       element :description
       element :public

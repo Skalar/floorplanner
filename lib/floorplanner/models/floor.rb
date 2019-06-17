@@ -1,7 +1,7 @@
 module Floorplanner
   module Models
     class Floor < Model
-      element :id
+      element :id, Integer
       element :name
       element :level
       element :height, Float

@@ -21,7 +21,8 @@ module Floorplanner
           end
           Time.parse(v)
         },
-        Float => lambda { |v| v.to_f }
+        Float => lambda { |v| v.to_f },
+        Integer => lambda { |v| v.to_i },
       }
 
       def self.complex_elements
