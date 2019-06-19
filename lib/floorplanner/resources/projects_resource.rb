@@ -1,80 +1,79 @@
 module Floorplanner
   module Resources
     class ProjectsResource < Resource
-      def all(user_id: nil)
-        path = user_id.nil? ? "projects.xml" : "users/#{user_id}/projects.xml"
-        res = client.get(path)
-        ::Floorplanner::Models::ProjectsDocument.from_xml(res.body).projects
+      def all
+        res = client.get("projects.json")
+        ::Floorplanner::Models::ProjectsDocument.from_json(res.body).projects
       end
 
       def find(id)
-        res = client.get("projects/#{id}.xml")
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+        res = client.get("projects/#{id}.json")
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
-      def create(project, user_id: nil)
-        url = user_id.nil? ? "projects.xml" : "users/#{user_id.to_i}/projects.xml"
-        res = client.post(url, project.to_xml)
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
-      end
-
-      def overwrite(id, fml_xml:)
-        res = client.put("projects/#{id}.xml", fml_xml)
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+      def create(project)
+        res = client.post("projects.json", project.to_json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       def delete(id)
-        client.delete("projects/#{id}.xml")
-      end
-
-      def create_floor(id, floor)
-        client.post("projects/#{id}/floors.xml", floor.to_xml)
-      end
-
-      def add_collaborator(id, email:)
-        xml = Gyoku.xml({email: email})
-        client.post("projects/#{id}/collaborate.xml", xml)
+        client.delete("projects/#{id}.json")
       end
 
       def export(id)
-        res = client.get("projects/#{id}/export.xml")
+        res = client.get("projects/#{id}.fml")
         res.body
       end
 
-      def render(id, export)
-        raise export.errors.first if export.errors.any?
-        client.post("projects/#{id}/render", export.to_xml)
+      def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: ['jpg'])
+        json = {
+          callback: callback,
+          width: width,
+          height: height,
+          fmt: fmt,
+          type: '2d',
+          paper: {
+            orientation: orientation,
+            combine: combine
+          }
+        }.to_json
+
+        client.post("projects/#{id}/export.json", json)
       end
 
-      def render_2d(id, callback:, width:, height:, combine:)
-        json = { callback: callback, width: width, height: height, combine: combine }.to_json
-        client.post("projects/#{id}/render2d.json", json, content_type: "application/json")
-      end
-
-      def render_3d(id, callback:, width:, height:, section:, view:, combine:)
-        raise ArgumentError, "Unsupported view type: #{view}" unless %w{ se sw ne nw top }.include?(view)
+      def render_3d(id, callback:, width:, height:, orientation:, view:, combine:, fmt: ['jpg'])
+        unless %w{ se sw ne nw top tilted photo panorama stereo }.include?(view)
+          raise ArgumentError, "Unsupported view type: #{view}"
+        end
 
         json = {
           callback: callback,
           width: width,
           height: height,
-          section: section,
-          view: view,
-          combine: combine
+          fmt: fmt,
+          type: '3d',
+          views: [
+            {type: view}
+          ],
+          paper: {
+            orientation: orientation,
+            combine: combine
+          }
         }.to_json
 
-        client.post("projects/#{id}/render3d.json", json, content_type: "application/json")
+        client.post("projects/#{id}/export.json", json)
       end
 
-      def publish(id, project_configuration)
-        raise project_configuration.errors.first if project_configuration.errors.any?
-        res = client.post("projects/#{id}/configuration.xml", project_configuration.to_xml)
-        ::Floorplanner::Models::PublishConfigurationDocument.from_xml(res.body).publish_configuration
+      def publish(id)
+        json = {public: true}.to_json
+        res = client.put("projects/#{id}.json", json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       def unpublish(id)
-        res = client.delete("projects/#{id}/configuration.xml")
-        ::Floorplanner::Models::ProjectDocument.from_xml(res.body).project
+        json = {public: false}.to_json
+        res = client.put("projects/#{id}.json", json)
+        ::Floorplanner::Models::ProjectDocument.from_json(res.body).project
       end
 
       private

@@ -6,18 +6,14 @@ require "json"
 
 require "httpi"
 require "nori"
-require "gyoku"
 require "hashie"
 
 require "floorplanner/models/model"
 require "floorplanner/models/design"
 require "floorplanner/models/drawing"
 require "floorplanner/models/floor"
+require "floorplanner/models/template"
 require "floorplanner/models/project"
-
-require "floorplanner/models/publish_configuration"
-require "floorplanner/models/resolution"
-require "floorplanner/models/export"
 
 require "floorplanner/client"
 

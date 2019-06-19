@@ -1,20 +1,9 @@
 module Floorplanner
   module Models
     module ComplexElement
-      def self.to_xml(value)
-        value.to_unrooted_xml_hash
-      end
     end
 
     module ComplexArrayElement
-      def self.to_xml(value)
-        { :@type => "array" }.tap do |hash|
-          if value.any?
-            element_name = "#{value.first.element_name}!"
-            hash[:content!] = { element_name.to_sym => value.map { |v| v.to_unrooted_xml_hash[:content!] } }
-          end
-        end
-      end
     end
 
     class Model < Hashie::Trash
@@ -22,14 +11,19 @@ module Floorplanner
       include Hashie::Extensions::IgnoreUndeclared
 
       ELEMENT_TRANSFORMATIONS = {
-        Time => lambda { |v| Time.parse(v) },
-        Float => lambda { |v| v.to_f }
+        Time => lambda { |v|
+          return v if v.class == Time
+          if v.class == DateTime
+            # When values like "2019-06-03T09:34:59+0000" are provided they automatically are set as
+            # DateTime objects by the XML parser, therefore we convert them to Time objects using
+            # the technique documented at: https://stackoverflow.com/a/3513247
+            return Time.new(v.year, v.month, v.day, v.hour, v.min, v.sec, v.zone)
+          end
+          Time.parse(v)
+        },
+        Float => lambda { |v| v.to_f },
+        Integer => lambda { |v| v.to_i },
       }
-
-      # These properties are declared for
-      # compatability with Gyoku
-      property :attributes!
-      property :order!
 
       def self.complex_elements
         @complex_elements ||= {}
@@ -56,12 +50,17 @@ module Floorplanner
 
         coerce_key name_sym, type
         property name_sym
-      end 
+      end
 
       def self.from_xml(xml_str)
         parser = Nori.new
         hash = parser.parse(xml_str)
         from_hash(hash)
+      end
+
+      def self.from_json(json_str, key)
+        hash = JSON.parse(json_str)
+        from_hash({key => hash})
       end
 
       def self.from_hash(hash)
@@ -70,26 +69,22 @@ module Floorplanner
         new(hash)
       end
 
-      def to_xml
-        Gyoku.xml(element_name => to_unrooted_xml_hash)
+      def to_json
+        {element_name => to_unrooted_hash}.to_json
       end
 
-      def to_unrooted_xml_hash
-        xml_hash = { :content! => {} }
-
-        if self.class.namespace
-          xml_hash[:@xmlns] = self.class.namespace
-        end
+      def to_unrooted_hash
+        xml_hash = {}
 
         each do |key, value|
-          element_name_for_key = key.to_s.gsub("_", "-")
-
           complex = self.class.complex_elements[key]
 
-          if complex
-            xml_hash[:content!][element_name_for_key.concat("!").to_sym] = complex.to_xml(value)
+          if complex == Floorplanner::Models::ComplexArrayElement
+            xml_hash[key.to_s.concat("_attributes").to_sym] = value.map { |e| e.to_unrooted_hash }
+          elsif complex
+            xml_hash[key.to_s.concat("_attributes").to_sym] = value.to_unrooted_hash
           else
-            xml_hash[:content!][element_name_for_key.to_sym] = value
+            xml_hash[key] = value
           end
         end
 

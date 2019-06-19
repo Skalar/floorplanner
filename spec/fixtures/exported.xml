@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <id type="integer">29261344</id>
+  <user-id type="integer">19450847</user-id>
+  <public type="boolean">false</public>
+  <name>Skalar test</name>
+  <description nil="true"/>
+  <project-url>sntodc</project-url>
+  <created-at>2019-06-03T09:34:59+0000</created-at>
+  <updated-at>2019-06-03T10:16:35+0000</updated-at>
+  <enable-autosave type="boolean">false</enable-autosave>
+  <external-identifier nil="true"/>
+  <exported-at nil="true"/>
+  <level-id type="integer">9</level-id>
+  <cached-tags>{"wallHeight":280,"wallSectionHeight":280,"wallThickness":15,"wallOuterThickness":30,"useMetric":false,"showGrid":true,"showDims":true,"showDropShadows":true,"showObjects":true,"showObjectColour":true,"showStructuralColour":true,"showLights":true,"useSection3D":false,"showLabels":true,"dimLineLabelHorizontal":false,"wallTopColor3D":"#000000","wallTopColor2D":"#000000","exportLabels3D":false,"showShadows3D":true,"exportOrtho3D":false,"visuals":"ALL","showTexts":true,"arrowHeadType":"arrow"}</cached-tags>
+  <settings>{"wallHeight":280,"wallSectionHeight":280,"wallThickness":15,"wallOuterThickness":30,"useMetric":false,"showGrid":true,"showDims":true,"showDropShadows":true,"showObjects":true,"showObjectColour":true,"showStructuralColour":true,"showLights":true,"useSection3D":false,"showLabels":true,"dimLineLabelHorizontal":false,"wallTopColor3D":"#000000","wallTopColor2D":"#000000","exportLabels3D":false,"showShadows3D":true,"exportOrtho3D":false,"visuals":"ALL","showTexts":true,"arrowHeadType":"arrow"}</settings>
+  <features type="array">
+    <feature>hd</feature>
+  </features>
+  <floors type="array">
+    <floor>
+      <id type="integer">35485287</id>
+      <project-id type="integer">29261344</project-id>
+      <name>Ground floor</name>
+      <level type="integer">0</level>
+      <created-at>2019-06-03T09:34:59+0000</created-at>
+      <updated-at>2019-06-03T10:16:35+0000</updated-at>
+      <height type="decimal">2.8</height>
+      <designs type="array">
+        <design version="2.0">
+          <id type="integer">647805585</id>
+          <name>untitled</name>
+          <settings>
+            <areaLabelMultiplier>1</areaLabelMultiplier>
+            <engineAutoDims>false</engineAutoDims>
+            <engineAutoThickness>false</engineAutoThickness>
+            <scaleMultiplierDimensions>1.5</scaleMultiplierDimensions>
+            <scaleMultiplierComments>1</scaleMultiplierComments>
+            <showCeilings3D>true</showCeilings3D>
+          </settings>
+          <lines type="array">
+            <line>
+              <type>default_wall</type>
+              <points>3.661 1.161 0.000 3.661 -1.289 0.000,3.661 1.161 2.800 3.661 -1.289 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>3.837 -1.964 0.000 4.491 -1.964 0.000,3.837 -1.964 2.800 4.491 -1.964 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 1.316 0.000 3.661 1.161 0.000,-2.126 1.316 2.800 3.661 1.161 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>4.491 -1.964 0.000 4.491 3.553 0.000,4.491 -1.964 2.800 4.491 3.553 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 3.553 0.000 -2.126 1.316 0.000,-2.126 3.553 2.800 -2.126 1.316 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>4.491 3.553 0.000 -2.126 3.553 0.000,4.491 3.553 2.800 -2.126 3.553 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>4.491 -3.798 0.000 4.491 -1.964 0.000,4.491 -3.798 2.800 4.491 -1.964 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 -1.964 0.000 3.837 -1.964 0.000,-2.126 -1.964 2.800 3.837 -1.964 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 1.316 0.000 -2.126 -1.964 0.000,-2.126 1.316 2.800 -2.126 -1.964 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>4.491 -4.221 0.000 4.491 -3.798 0.000,4.491 -4.221 2.800 4.491 -3.798 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 -4.221 0.000 4.491 -4.221 0.000,-2.126 -4.221 2.800 4.491 -4.221 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+            <line>
+              <type>default_wall</type>
+              <points>-2.126 -1.964 0.000 -2.126 -4.221 0.000,-2.126 -1.964 2.800 -2.126 -4.221 2.800</points>
+              <color>#000000</color>
+              <thickness>0.150</thickness>
+              <balance>0.5</balance>
+            </line>
+          </lines>
+          <areas type="array">
+            <area>
+              <type>generated_area</type>
+              <layer>0</layer>
+              <color>#F2D8B0</color>
+              <points>-2.051 -2.039 0.000 3.837 -2.039 0.000,3.837 -2.039 0.000 4.416 -2.039 0.000,4.416 -2.039 0.000 4.416 -3.798 0.000,4.416 -3.798 0.000 4.416 -4.146 0.000,4.416 -4.146 0.000 -2.051 -4.146 0.000,-2.051 -4.146 0.000 -2.051 -2.039 0.000</points>
+              <rotation>0 0 0</rotation>
+            </area>
+            <area>
+              <type>generated_area</type>
+              <layer>0</layer>
+              <color>#F2D8B0</color>
+              <points>-2.051 1.389 0.000 -2.051 3.478 0.000,-2.051 3.478 0.000 4.416 3.478 0.000,4.416 3.478 0.000 4.416 -1.889 0.000,4.416 -1.889 0.000 3.837 -1.889 0.000,3.837 -1.889 0.000 -2.051 -1.889 0.000,-2.051 -1.889 0.000 -2.051 1.239 0.000,-2.051 1.239 0.000 -2.051 1.389 0.000</points>
+              <rotation>0 0 0</rotation>
+            </area>
+          </areas>
+          <assets/>
+          <objects type="array">
+            <object>
+              <asset refid="200"/>
+              <type>door</type>
+              <points>0.167 1.254 0.000</points>
+              <size>0.980 0.150 2.200</size>
+              <rotation>0 0 -1.5275254422129245</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="200"/>
+              <type>door</type>
+              <points>0.864 3.553 0.000</points>
+              <size>0.980 0.150 2.200</size>
+              <rotation>0 0 180</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="219"/>
+              <type>window</type>
+              <points>-1.200 3.553 0.700</points>
+              <size>1.080 0.150 1.700</size>
+              <rotation>0 0 180</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="219"/>
+              <type>window</type>
+              <points>2.697 3.553 0.700</points>
+              <size>1.080 0.150 1.700</size>
+              <rotation>0 0 180</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="200"/>
+              <type>door</type>
+              <points>0.826 -1.964 0.000</points>
+              <size>0.980 0.150 2.200</size>
+              <rotation>0 0 3.550245362626784e-13</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="3756"/>
+              <type>window</type>
+              <points>-0.525 -4.221 0.700</points>
+              <size>1.080 0.150 1.700</size>
+              <rotation>0 0 0</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="3759"/>
+              <type>window</type>
+              <points>1.424 -4.221 0.700</points>
+              <size>1.080 0.150 1.700</size>
+              <rotation>0 0 0</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+            <object>
+              <asset refid="3759"/>
+              <type>window</type>
+              <points>3.333 -4.221 0.700</points>
+              <size>1.080 0.150 1.700</size>
+              <rotation>0 0 0</rotation>
+              <mirrored>0 0 0</mirrored>
+            </object>
+          </objects>
+          <project-id>29261344</project-id>
+          <floor-id>211485</floor-id>
+        </design>
+      </designs>
+      <drawing>
+        <id type="integer">3108</id>
+        <url>https://fpcdn_dev.s3.amazonaws.com/uploads/drawings/3108/underlag.jpg</url>
+        <content_type>image/jpeg</content_type>
+        <position>0.00 0.00 0.00</position>
+        <alpha>50</alpha>
+        <rotation>0.00 0.00 0.00</rotation>
+        <visible>1</visible>
+        <size>16.00 10.67 0.00</size>
+      </drawing>
+      <cameras type="array">
+        <camera>
+          <id type="integer">12249</id>
+          <floor-id type="integer">211485</floor-id>
+          <name>Camera 1</name>
+          <fov type="integer">30</fov>
+          <points>0 0 1.6</points>
+          <direction>0.000000 0.000000 -1.000000</direction>
+          <u-vector>0.000000 -1.000000 1.000000</u-vector>
+          <light-settings>
+            <day type="boolean">true</day>
+            <intensity type="integer">50</intensity>
+            <azimuth type="integer">0</azimuth>
+            <altitude type="integer">45</altitude>
+          </light-settings>
+          <background-image>
+            <url type="uploader" nil="true"/>
+          </background-image>
+          <background-settings nil="true"/>
+          <sky-id type="integer" nil="true"/>
+          <is-deleted type="boolean">false</is-deleted>
+          <created-at>2019-06-03T09:38:29+0000</created-at>
+          <updated-at>2019-06-03T09:38:29+0000</updated-at>
+          <list-order type="integer" nil="true"/>
+          <type-name>orbital</type-name>
+        </camera>
+        <camera>
+          <id type="integer">12252</id>
+          <floor-id type="integer">211485</floor-id>
+          <name>Camera 2</name>
+          <fov type="integer">58</fov>
+          <points>0 0 1.6</points>
+          <direction>0.000000 -1.000000 0.000000</direction>
+          <u-vector>0.000000 0.000000 -1.000000</u-vector>
+          <light-settings>
+            <day type="boolean">true</day>
+            <intensity type="integer">50</intensity>
+            <azimuth type="integer">0</azimuth>
+            <altitude type="integer">45</altitude>
+          </light-settings>
+          <background-image>
+            <url type="uploader" nil="true"/>
+          </background-image>
+          <background-settings nil="true"/>
+          <sky-id type="integer" nil="true"/>
+          <is-deleted type="boolean">false</is-deleted>
+          <created-at>2019-06-03T09:38:29+0000</created-at>
+          <updated-at>2019-06-03T09:38:29+0000</updated-at>
+          <list-order type="integer" nil="true"/>
+          <type-name>walkthrough</type-name>
+        </camera>
+      </cameras>
+    </floor>
+  </floors>
+</project>

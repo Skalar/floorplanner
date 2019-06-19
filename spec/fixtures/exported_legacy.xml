@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <cached-tags></cached-tags>
+  <created-at type="datetime">2019-05-02T10:51:18-04:00</created-at>
+  <description></description>
+  <element-library-id type="integer">1</element-library-id>
+  <enable-autosave type="boolean">false</enable-autosave>
+  <exported-at type="datetime"></exported-at>
+  <external-identifier></external-identifier>
+  <grid-cell-size type="decimal"></grid-cell-size>
+  <grid-sub-cell-size type="decimal"></grid-sub-cell-size>
+  <id type="integer">63722943</id>
+  <level-id type="integer">2</level-id>
+  <name>An old project</name>
+  <original-project-id type="integer"></original-project-id>
+  <project-url>k4nz2g</project-url>
+  <public type="boolean">false</public>
+  <texture-library-id type="integer">1</texture-library-id>
+  <updated-at type="datetime">2019-05-02T10:58:18-04:00</updated-at>
+  <user-id type="integer">26011672</user-id>
+  <wall-thickness type="decimal">0.25</wall-thickness>
+  <floors type="array">
+    <floor>
+      <id type="integer">115050306</id>
+      <name>Floor 0</name>
+      <level type="integer">0</level>
+      <height type="decimal">2.8</height>
+      <created-at>2019-05-02 10:51:18 -0400</created-at>
+      <updated-at>2019-05-02 10:58:18 -0400</updated-at>
+      <designs type="array">
+        <design>
+          <id>121351764</id>
+          <name>Floor 0</name>
+          <project-id>63722943</project-id>
+          <floor-id>115050306</floor-id>
+          <version-2d>370</version-2d>
+          <version-3d>153</version-3d>
+          <units>meters</units>
+          <assets type="array">
+            <asset id="l14">
+              <url2d>linears/2d/2_losse_muur.png</url2d>
+              <url3d/>
+              <thickness>0.07</thickness>
+              <color>#000000</color>
+            </asset>
+            <asset id="208">
+              <name>French doors</name>
+              <url2d>img_2ds/208/original/FrenchdoorModern.swf</url2d>
+              <layer>16</layer>
+              <url3d>img_3ds/208/original/FrenchDoorsModern.kmz</url3d>
+              <filter-value>null</filter-value>
+            </asset>
+            <asset id="220">
+              <name>Three pane window</name>
+              <url2d>img_2ds/220/original/3PaneWindow.swf</url2d>
+              <layer>16</layer>
+              <url3d>img_3ds/220/original/ThreePaneWindow.kmz</url3d>
+              <filter-value>null</filter-value>
+            </asset>
+            <asset id="201">
+              <name>Classic door</name>
+              <url2d>img_2ds/201/original/LeftTop.swf</url2d>
+              <layer>16</layer>
+              <url3d>img_3ds/201/original/PanelDoor.kmz</url3d>
+              <filter-value>null</filter-value>
+            </asset>
+          </assets>
+          <objects type="array">
+            <object>
+            <asset refid="201"/>
+            <type>door</type>
+            <points>5.739 0.682 0</points>
+            <size>0.9 0.25 2.2</size>
+            </object>
+            <object>
+            <asset refid="220"/>
+            <type>window</type>
+            <points>10.359 9.125 0.65</points>
+            <size>2 0.25 1.6</size>
+            </object>
+            <object>
+            <asset refid="220"/>
+            <type>window</type>
+            <points>6.454 9.125 0.65</points>
+            <size>2 0.25 1.6</size>
+            </object>
+            <object>
+            <asset refid="220"/>
+            <type>window</type>
+            <points>8.016 0.682 0.65</points>
+            <size>2 0.25 1.6</size>
+            </object>
+            <object>
+            <asset refid="208"/>
+            <type>door</type>
+            <points>10.908 0.682 0</points>
+            <size>1.709 0.25 2.2</size>
+            </object>
+          </objects>
+          <areas type="array">
+            <area>
+            <layer>0</layer>
+            <type>generated_area</type>
+            <points>4.99 0.81 0 12.14 0.81 0,12.14 0.81 0 12.14 9 0,12.14 9 0 4.99 9 0,4.99 9 0 4.99 0.81 0</points>
+            <color>#fcc778</color>
+            </area>
+          </areas>
+          <lines type="array">
+            <line>
+            <asset refid="l1"/>
+            <type>default_wall</type>
+            <points>4.869 0.682 0 12.266 0.682 0,4.869 0.682 2.8 12.266 0.682 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l1"/>
+            <type>default_wall</type>
+            <points>12.266 0.682 0 12.266 9.125 0,12.266 0.682 2.8 12.266 9.125 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l1"/>
+            <type>default_wall</type>
+            <points>12.266 9.125 0 4.869 9.125 0,12.266 9.125 2.8 4.869 9.125 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l1"/>
+            <type>default_wall</type>
+            <points>4.869 9.125 0 4.869 0.682 0,4.869 9.125 2.8 4.869 0.682 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l14"/>
+            <type>normal_wall</type>
+            <points>6.587 0.745 0 6.587 7.859 0,6.587 0.745 2.8 6.587 7.859 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l14"/>
+            <type>normal_wall</type>
+            <points>6.587 7.859 0 10.558 7.859 0,6.587 7.859 2.8 10.558 7.859 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l14"/>
+            <type>normal_wall</type>
+            <points>10.558 7.859 0 10.443 2.774 0,10.558 7.859 2.8 10.443 2.774 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+            <line>
+            <asset refid="l14"/>
+            <type>normal_wall</type>
+            <points>10.443 2.774 0 10.558 2.774 0,10.443 2.774 2.8 10.558 2.774 2.8</points>
+            <thickness>0.25</thickness>
+            <color>#000000</color>
+            </line>
+          </lines>
+        </design>
+      </designs>
+      <drawing>
+        <id type="integer">9534597</id>
+        <url>https://some-example/sketch.jpg</url>
+        <content_type>image/jpeg</content_type>
+        <position>7.50 5.00 0.00</position>
+        <size>16.00 10.67 0.00</size>
+        <alpha>50.00</alpha>
+        <visible>1</visible>
+      </drawing>
+    </floor>
+  </floors>
+</project>
