@@ -39,7 +39,7 @@ new_project = Floorplanner::Models::Project.new(
 created = resource.create(new_project)
 
 # Render a 2D version of the project
-resource.render_2d(created.id, callback: 'http://my.server.com/callback-handler', width: 2000, height: 1500, filetype: 'jpg')
+resource.render_2d(created.id, callback: 'http://my.server.com/callback-handler', width: 2000, height: 1500, fmt: ['jpg', 'pdf'])
 
 # Check out lib/floorplanner/resources/projects_resource.rb for more helper methods.
 # There is also Floorplanner::Resources::UsersResource with a helper method for
