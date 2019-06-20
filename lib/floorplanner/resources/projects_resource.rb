@@ -25,7 +25,7 @@ module Floorplanner
         res.body
       end
 
-      def render_2d(id, callback:, width:, height:, orientation:, combine:, fmt: ['jpg'])
+      def render_2d(id, callback:, width:, height:, orientation:, combine:, color:, fmt: ['jpg'])
         json = {
           callback: callback,
           width: width,
@@ -34,7 +34,8 @@ module Floorplanner
           type: '2d',
           paper: {
             orientation: orientation,
-            combine: combine
+            combine: combine,
+            visuals: color
           }
         }.to_json
 

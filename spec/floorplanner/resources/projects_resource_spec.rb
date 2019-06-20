@@ -95,7 +95,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#render_2d" do
     it "posts a JSON request to the project render2d endpoint" do
-      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true, orientation: "landscape")
+      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true, orientation: "landscape", color: "BWC")
       expect(client.post_path).to eq("projects/123/export.json")
 
       json = JSON.parse(client.post_data)
@@ -104,6 +104,7 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(json["width"]).to be(500)
       expect(json["height"]).to be(400)
       expect(json["paper"]["combine"]).to eq(true)
+      expect(json["paper"]["visuals"]).to eq("BWC")
     end
   end
 
