@@ -95,7 +95,7 @@ describe Floorplanner::Resources::ProjectsResource do
 
   describe "#render_2d" do
     it "posts a JSON request to the project render2d endpoint" do
-      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true, orientation: "landscape", color: "BWC")
+      subject.render_2d(123, callback: "http://example.com", width: 500, height: 400, combine: true, orientation: "landscape", color: "BWC", stamp_names: true)
       expect(client.post_path).to eq("projects/123/export.json")
 
       json = JSON.parse(client.post_data)
@@ -105,6 +105,7 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(json["height"]).to be(400)
       expect(json["paper"]["combine"]).to eq(true)
       expect(json["paper"]["visuals"]).to eq("BWC")
+      expect(json["paper"]["stamp_names"]).to eq(true)
     end
   end
 
@@ -116,7 +117,8 @@ describe Floorplanner::Resources::ProjectsResource do
         height: 400,
         view: "top",
         combine: false,
-        orientation: "landscape"
+        orientation: "landscape",
+        stamp_names: false
       }
     }
 
@@ -133,15 +135,7 @@ describe Floorplanner::Resources::ProjectsResource do
     end
 
     it "posts a JSON request to the project render3d endpoint" do
-      subject.render_3d(123,
-        callback: "http://example.com",
-        width: 500,
-        height: 400,
-        view: "top",
-        combine: false,
-        orientation: "landscape"
-      )
-
+      subject.render_3d(123, **opts)
       expect(client.post_path).to eq("projects/123/export.json")
 
       json = JSON.parse(client.post_data)
@@ -151,6 +145,7 @@ describe Floorplanner::Resources::ProjectsResource do
       expect(json["height"]).to be(400)
       expect(json["views"].first["type"]).to eq("top")
       expect(json["paper"]["combine"]).to eq(false)
+      expect(json["paper"]["stamp_names"]).to eq(false)
     end
   end
 
